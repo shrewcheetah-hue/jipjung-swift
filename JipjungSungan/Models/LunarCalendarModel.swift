@@ -79,11 +79,20 @@ struct LunarCalendarModel {
     static func today() -> LunarDay {
         let calendar = Calendar(identifier: .chinese)
         let now = Date()
-        let components = calendar.dateComponents([.month, .day, .isLeapMonth], from: now)
+        var componentSet: Set<Calendar.Component> = [.month, .day]
+        if #available(iOS 17, *) {
+            componentSet.insert(.isLeapMonth)
+        }
+        let components = calendar.dateComponents(componentSet, from: now)
 
         let lunarMonth = components.month ?? 1
         let lunarDay = components.day ?? 1
-        let isLeap = components.isLeapMonth ?? false
+        let isLeap: Bool
+        if #available(iOS 17, *) {
+            isLeap = components.isLeapMonth ?? false
+        } else {
+            isLeap = false
+        }
 
         let moonPhase = calculateMoonPhase(lunarDay: lunarDay)
         let prayerTimes = calculatePrayerTimes(moonPhase: moonPhase)
