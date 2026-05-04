@@ -191,10 +191,19 @@ class RhythmEngine: ObservableObject {
     }
 
     private func prepareAudio(stage: Stage) {
-        // 목탁 소리 - 번들에 moktak.mp3 또는 moktak.wav 파일 필요
-        // 없을 경우 시스템 사운드 사용
-        if let url = Bundle.main.url(forResource: "moktak", withExtension: "mp3") ??
-                     Bundle.main.url(forResource: "moktak", withExtension: "wav") {
+        // 단계별 목탁 소리
+        // 1~2단계: moktak1 (따라가기/느끼기 - 긴 여운)
+        // 3~4단계: moktak2 (전환/내면 - 긴 여운)
+        // 5단계(심장): moktak3 (짧고 선명)
+        let soundName: String
+        switch stage {
+        case 1, 2: soundName = "moktak1"
+        case 3, 4: soundName = "moktak2"
+        default:   soundName = "moktak3"
+        }
+        if let url = Bundle.main.url(forResource: soundName, withExtension: "wav") ??
+                     Bundle.main.url(forResource: "moktak", withExtension: "wav") ??
+                     Bundle.main.url(forResource: "moktak", withExtension: "mp3") {
             audioPlayer = try? AVAudioPlayer(contentsOf: url)
             audioPlayer?.prepareToPlay()
         }
