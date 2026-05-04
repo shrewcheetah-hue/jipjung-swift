@@ -27,20 +27,20 @@ struct PracticeView: View {
 
                 Spacer()
 
-                // 중앙 - 타이밍 링 + 목탁 탭 영역
+                // 중앙 - 목탁 탭 영역 + 타이밍 링 (링이 목탁 위에)
                 ZStack {
-                    // 타이밍 링 (수축하는 원)
-                    if engine.stage < 5 {
-                        timingRing
-                    }
-
-                    // 가이드 빛 플래시 (1~2단계)
+                    // 가이드 빛 플래시 (1~2단계) - 맨 아래
                     if engine.stageConfig.hasGuideLight {
                         guideFlash
                     }
 
-                    // 목탁 탭 영역
+                    // 목탁 탭 영역 (중간)
                     moktakTapArea
+
+                    // 타이밍 링 (수축하는 원) - 목탁 위에 표시
+                    if engine.stage < 5 {
+                        timingRing
+                    }
                 }
                 .frame(width: 300, height: 300)
 

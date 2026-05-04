@@ -66,7 +66,7 @@ struct L10n {
 
     var stageLabels: [String] {
         switch lang {
-        case "ko": return ["따라", "느껴", "전환", "내면", "심장"]
+        case "ko": return ["따라가기", "느끼기", "전환하기", "내면보기", "심장"]
         case "ja": return ["従う", "感じる", "転換", "内面", "心臓"]
         case "zh": return ["跟随", "感受", "转换", "内心", "心跳"]
         case "fr": return ["Suivre", "Ressentir", "Transition", "Intérieur", "Cœur"]
