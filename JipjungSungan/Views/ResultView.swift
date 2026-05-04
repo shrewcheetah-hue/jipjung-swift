@@ -97,17 +97,32 @@ struct ResultView: View {
     // MARK: - Completion Symbol
     private var completionSymbol: some View {
         ZStack {
+            // 황금빛 glow
             Circle()
-                .stroke(AppColors.goldAlpha15, lineWidth: 1)
-                .frame(width: 100, height: 100)
+                .fill(
+                    RadialGradient(
+                        gradient: Gradient(colors: [
+                            Color(red: 0.55, green: 0.35, blue: 0.15).opacity(0.4),
+                            Color.clear
+                        ]),
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 70
+                    )
+                )
+                .frame(width: 140, height: 140)
 
-            Circle()
-                .stroke(AppColors.goldAlpha30, lineWidth: 1)
-                .frame(width: 70, height: 70)
-
-            Text("☸")
-                .font(.system(size: 32))
-                .foregroundColor(AppColors.gold)
+            // 목탁 이미지
+            if UIImage(named: "moktak") != nil {
+                Image("moktak")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 130, height: 130)
+            } else {
+                Text("木鐸")
+                    .font(.system(size: 36, weight: .thin))
+                    .foregroundColor(AppColors.goldDim)
+            }
         }
     }
 
