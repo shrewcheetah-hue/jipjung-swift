@@ -27,7 +27,7 @@ class RhythmEngine: ObservableObject {
     @Published var heartBpm: Double? = nil
 
     // MARK: - Private
-    private var stageConfig: StageConfig = stageConfigs[0]
+    private var currentStageIndex: Int = 0
     private var beatInterval: TimeInterval = 60.0 / 80.0
     private var lastBeatTime: Date = Date()
     private var beatTimer: Timer?
@@ -42,7 +42,7 @@ class RhythmEngine: ObservableObject {
         let actualBpm = (stage == 5 && heartBpm != nil) ? heartBpm! : config.bpm
 
         self.stage = stage
-        self.stageConfig = config
+        self.currentStageIndex = stage - 1
         self.bpm = actualBpm
         self.isRunning = true
         self.totalHits = 0
@@ -107,7 +107,7 @@ class RhythmEngine: ObservableObject {
             if consecutiveHits > bestConsecutive {
                 bestConsecutive = consecutiveHits
             }
-            promoteProgress = min(promoteProgress + 1, Double(stageConfig.promoteThreshold))
+            promoteProgress = min(promoteProgress + 1, Double(stageConfigs[currentStageIndex].promoteThreshold))
         } else {
             consecutiveHits = 0
             promoteProgress = max(promoteProgress - 0.5, 0)
@@ -116,14 +116,14 @@ class RhythmEngine: ObservableObject {
         lastHitResult = hitResult
 
         // 진급 체크
-        if !promoteLocked && promoteProgress >= Double(stageConfig.promoteThreshold) && stage < 5 {
+        if !promoteLocked && promoteProgress >= Double(stageConfigs[currentStageIndex].promoteThreshold) && stage < 5 {
             promoteLocked = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
                 guard let self = self else { return }
                 let nextStage = self.stage + 1
                 let nextConfig = stageConfigs[nextStage - 1]
                 self.stage = nextStage
-                self.stageConfig = nextConfig
+                self.currentStageIndex = nextStage - 1
                 self.bpm = nextConfig.bpm
                 self.promoteProgress = 0
                 self.consecutiveHits = 0
@@ -212,7 +212,7 @@ class RhythmEngine: ObservableObject {
     }
 
     var promoteRemaining: Int {
-        max(stageConfig.promoteThreshold - Int(promoteProgress), 0)
+        max(stageConfigs[currentStageIndex].promoteThreshold - Int(promoteProgress), 0)
     }
 
     var elapsedFormatted: String {
