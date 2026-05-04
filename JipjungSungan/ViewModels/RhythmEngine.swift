@@ -6,10 +6,13 @@ import Combine
 // 집중의 순간 - 리듬 엔진
 // - 박자 루프: 가이드 빛만 (소리/진동 없음)
 // - 탭 시: 소리 + 진동 (4단계 제외 소리)
-// - Perfect window: 12%, Near window: 25%
+// - Perfect window: 링이 고정원에 닿는 순간 (beatInterval 끝 8% 이내)
+// - Near window: 15% 이내
+// ringProgress: 0(박자 직후) → 1(다음 박자 직전)
+// 탭 타이밍: ringProgress가 1에 가까울수록 perfect
 
-private let perfectWindow = 0.12
-private let nearWindow = 0.25
+private let perfectWindow = 0.08   // 박자 끝 8% 이내
+private let nearWindow    = 0.18   // 박자 끝 18% 이내
 
 class RhythmEngine: ObservableObject {
     // MARK: - Published State
@@ -86,10 +89,16 @@ class RhythmEngine: ObservableObject {
         generator.impactOccurred()
 
         // 타이밍 판정
+        // ringProgress: 0 → 1 (다음 박자 직전 = 1.0)
+        // 링이 고정원에 닿는 순간(ringProgress ≈ 1.0)에 탭해야 perfect
         let now = Date()
         let timeSinceLastBeat = now.timeIntervalSince(lastBeatTime)
-        let distFromBeat = min(timeSinceLastBeat, beatInterval - timeSinceLastBeat)
-        let ratio = distFromBeat / beatInterval
+        let progress = min(timeSinceLastBeat / beatInterval, 1.0)
+        // 링이 끝에 얼마나 가까운지 (0 = 완벽, 1 = 시작 직후)
+        let distFromEnd = 1.0 - progress
+        // 다음 박자 직후도 고려 (링이 막 리셋된 직후)
+        let distFromBeat = min(distFromEnd, progress)
+        let ratio = distFromBeat
 
         let hitResult: HitResult
         if ratio <= perfectWindow {

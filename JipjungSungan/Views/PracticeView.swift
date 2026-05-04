@@ -119,7 +119,7 @@ struct PracticeView: View {
 
     // MARK: - Timing Ring
     private var timingRing: some View {
-        let maxRadius: CGFloat = 175
+        let maxRadius: CGFloat = 230
         let minRadius: CGFloat = 65
         let currentRadius = maxRadius - (maxRadius - minRadius) * CGFloat(engine.ringProgress)
 
