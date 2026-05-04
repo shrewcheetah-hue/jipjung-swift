@@ -13,6 +13,7 @@ struct PracticeView: View {
     @State private var showEndConfirm = false
     @State private var tapFlash = false
     @State private var hitFeedbackScale: CGFloat = 1.0
+    @State private var ringFlash = false  // perfect 시 링 합체 효과
 
     var body: some View {
         ZStack {
@@ -120,21 +121,29 @@ struct PracticeView: View {
     // MARK: - Timing Ring
     private var timingRing: some View {
         let maxRadius: CGFloat = 230
-        let minRadius: CGFloat = 65
+        let minRadius: CGFloat = 18
         let currentRadius = maxRadius - (maxRadius - minRadius) * CGFloat(engine.ringProgress)
+
+        // perfect 시 링이 두꺼워지고 밝아지는 효과
+        let lineW: CGFloat = ringFlash ? 4.0 : 1.5
+        let ringOpacity: Double = ringFlash ? 1.0 : 0.6
+        let fixedLineW: CGFloat = ringFlash ? 4.0 : 1.0
+        let fixedOpacity: Double = ringFlash ? 1.0 : 0.4
 
         return ZStack {
             // 수축하는 링
             Circle()
-                .stroke(ringColor, lineWidth: 1.5)
+                .stroke(ringFlash ? AppColors.goldBright : ringColor, lineWidth: lineW)
                 .frame(width: currentRadius * 2, height: currentRadius * 2)
-                .opacity(0.6)
-
+                .opacity(ringOpacity)
+                .animation(.easeOut(duration: 0.08), value: ringFlash)
             // 중앙 고정 원 (타격 지점)
             Circle()
-                .stroke(AppColors.goldAlpha30, lineWidth: 1)
+                .stroke(ringFlash ? AppColors.goldBright : AppColors.goldAlpha30, lineWidth: fixedLineW)
                 .frame(width: minRadius * 2, height: minRadius * 2)
-        }
+                .opacity(fixedOpacity)
+                .animation(.easeOut(duration: 0.08), value: ringFlash)
+        }}
     }
 
     private var ringColor: Color {
@@ -171,6 +180,13 @@ struct PracticeView: View {
             withAnimation(.easeIn(duration: 0.15).delay(0.08)) {
                 tapFlash = false
                 hitFeedbackScale = 1.0
+            }
+            // perfect 판정 시 링 합체 효과
+            if engine.lastHitResult == .perfect {
+                ringFlash = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    ringFlash = false
+                }
             }
         }) {
             ZStack {
