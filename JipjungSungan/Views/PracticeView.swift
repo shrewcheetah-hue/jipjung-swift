@@ -121,7 +121,7 @@ struct PracticeView: View {
     // MARK: - Timing Ring
     private var timingRing: some View {
         let maxRadius: CGFloat = 230
-        let minRadius: CGFloat = 18
+        let minRadius: CGFloat = 55
         let currentRadius = maxRadius - (maxRadius - minRadius) * CGFloat(engine.ringProgress)
 
         // perfect 시 링이 두꺼워지고 밝아지는 효과
