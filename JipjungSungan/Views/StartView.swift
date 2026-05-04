@@ -1,8 +1,7 @@
 import SwiftUI
 
 // 집중의 순간 - 시작 화면
-// 디자인: 소소하고 화려하지 않은 느낌, 목탁 테마
-// 1~4단계 버튼 + 5단계(심장) + 달의 기운 버튼
+// 디자인: 목탁 크게 (화면 상단 절반), 설명 텍스트 2줄, 하단 원형 BPM 버튼 5개
 
 struct StartView: View {
     let onSelectStage: (Int) -> Void
@@ -11,152 +10,116 @@ struct StartView: View {
     @State private var appear = false
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                // 상단 여백
-                Spacer().frame(height: 60)
+        GeometryReader { geo in
+            ZStack {
+                // 배경
+                Color(red: 0.08, green: 0.07, blue: 0.06).ignoresSafeArea()
 
-                // 앱 타이틀
-                titleSection
+                VStack(spacing: 0) {
+                    // 상단 여백
+                    Spacer().frame(height: 20)
 
-                Spacer().frame(height: 48)
+                    // 목탁 영역 (화면 상단 절반)
+                    moktakSection(width: geo.size.width)
 
-                // 목탁 아이콘 (텍스트 기반)
-                moktakIcon
+                    Spacer().frame(height: 32)
 
-                Spacer().frame(height: 48)
+                    // 설명 텍스트
+                    descriptionText
 
-                // 단계 선택 버튼들
-                stageButtons
+                    Spacer().frame(height: 40)
 
-                Spacer().frame(height: 24)
+                    // 하단 단계 선택 버튼 (원형 BPM)
+                    stageCircleButtons
 
-                // 5단계 심장 버튼
-                heartStageButton
+                    Spacer().frame(height: 28)
 
-                Spacer().frame(height: 32)
+                    // 달의 기운 버튼
+                    calendarButton
 
-                // 달의 기운 버튼
-                calendarButton
-
-                Spacer().frame(height: 48)
+                    Spacer().frame(height: 40)
+                }
             }
-            .padding(.horizontal, 28)
         }
         .opacity(appear ? 1 : 0)
         .onAppear {
-            withAnimation(.easeIn(duration: 0.6)) {
+            withAnimation(.easeIn(duration: 0.8)) {
                 appear = true
             }
         }
     }
 
-    // MARK: - Title Section
-    private var titleSection: some View {
-        VStack(spacing: 8) {
-            Text(t.appTitle)
-                .font(.system(size: 28, weight: .thin, design: .default))
-                .foregroundColor(AppColors.gold)
-                .tracking(6)
+    // MARK: - Moktak Section
+    private func moktakSection(width: CGFloat) -> some View {
+        let imgSize = width * 0.62
 
-            Text(t.appSubtitle)
-                .font(.system(size: 13, weight: .light))
-                .foregroundColor(AppColors.white30)
-                .tracking(2)
-        }
-    }
-
-    // MARK: - Moktak Icon (텍스트 기반 심볼)
-    private var moktakIcon: some View {
-        ZStack {
-            // 외부 원
+        return ZStack {
+            // 뒤쪽 부드러운 원형 glow
             Circle()
-                .stroke(AppColors.goldAlpha15, lineWidth: 1)
-                .frame(width: 140, height: 140)
-
-            // 내부 원
-            Circle()
-                .stroke(AppColors.goldAlpha30, lineWidth: 1)
-                .frame(width: 100, height: 100)
+                .fill(
+                    RadialGradient(
+                        gradient: Gradient(colors: [
+                            Color(red: 0.55, green: 0.35, blue: 0.15).opacity(0.35),
+                            Color.clear
+                        ]),
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: imgSize * 0.55
+                    )
+                )
+                .frame(width: imgSize * 1.1, height: imgSize * 1.1)
 
             // 목탁 이미지
             if UIImage(named: "moktak") != nil {
                 Image("moktak")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 100)
+                    .frame(width: imgSize, height: imgSize)
             } else {
                 Text("木鐸")
-                    .font(.system(size: 28, weight: .thin))
+                    .font(.system(size: 60, weight: .thin))
                     .foregroundColor(AppColors.goldDim)
             }
         }
+        .frame(height: imgSize)
     }
 
-    // MARK: - Stage Buttons (1~4단계)
-    private var stageButtons: some View {
-        VStack(spacing: 12) {
-            Text(t.startDesc1)
-                .font(.system(size: 12, weight: .light))
-                .foregroundColor(AppColors.white30)
-                .tracking(1)
-                .padding(.bottom, 4)
+    // MARK: - Description Text
+    private var descriptionText: some View {
+        VStack(spacing: 8) {
+            Text("목탁 소리에 집중하며")
+                .font(.system(size: 17, weight: .light))
+                .foregroundColor(AppColors.white80)
+                .tracking(3)
 
-            ForEach(1...4, id: \.self) { stage in
-                StageButton(
-                    stage: stage,
-                    onTap: { onSelectStage(stage) }
-                )
-            }
+            Text("내면의 고요함을 찾아가는 수행")
+                .font(.system(size: 17, weight: .light))
+                .foregroundColor(AppColors.white80)
+                .tracking(3)
         }
     }
 
-    // MARK: - Heart Stage Button (5단계)
-    private var heartStageButton: some View {
-        Button(action: { onSelectStage(5) }) {
-            HStack(spacing: 12) {
-                Image(systemName: "heart.fill")
-                    .font(.system(size: 16))
-                    .foregroundColor(AppColors.gold)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(t.stageLabels[4])
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundColor(AppColors.gold)
-
-                    Text(t.stageDescriptions[4])
-                        .font(.system(size: 11, weight: .light))
-                        .foregroundColor(AppColors.white30)
-                }
-
+    // MARK: - Stage Circle Buttons
+    private var stageCircleButtons: some View {
+        HStack(spacing: 0) {
+            ForEach(1...5, id: \.self) { stage in
                 Spacer()
-
-                Text("♡")
-                    .font(.system(size: 14))
-                    .foregroundColor(AppColors.goldDim)
+                StageCircleButton(stage: stage, onTap: { onSelectStage(stage) })
+                Spacer()
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(AppColors.goldAlpha08)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(AppColors.goldAlpha30, lineWidth: 1)
-                    )
-            )
         }
+        .padding(.horizontal, 8)
     }
 
     // MARK: - Calendar Button
     private var calendarButton: some View {
         Button(action: onCalendar) {
             Text(t.calendarButton)
-                .font(.system(size: 13, weight: .light))
-                .foregroundColor(AppColors.white50)
+                .font(.system(size: 12, weight: .light))
+                .foregroundColor(AppColors.white30)
                 .tracking(1)
-                .padding(.vertical, 12)
-                .padding(.horizontal, 24)
+                .padding(.vertical, 10)
+                .padding(.horizontal, 20)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
                         .stroke(AppColors.white10, lineWidth: 1)
@@ -165,59 +128,48 @@ struct StartView: View {
     }
 }
 
-// MARK: - Stage Button Component
-struct StageButton: View {
+// MARK: - Stage Circle Button Component
+struct StageCircleButton: View {
     let stage: Int
     let onTap: () -> Void
 
     private var config: StageConfig { stageConfigs[stage - 1] }
+    private var isHeart: Bool { stage == 5 }
 
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 12) {
-                // 단계 번호
+            VStack(spacing: 8) {
+                // 원형 버튼
                 ZStack {
                     Circle()
-                        .fill(AppColors.goldAlpha15)
-                        .frame(width: 32, height: 32)
-                    Text("\(stage)")
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundColor(AppColors.gold)
-                }
+                        .fill(AppColors.surface)
+                        .overlay(
+                            Circle()
+                                .stroke(
+                                    isHeart ? AppColors.goldAlpha30 : AppColors.goldAlpha15,
+                                    lineWidth: isHeart ? 1.5 : 1
+                                )
+                        )
+                        .frame(width: 58, height: 58)
 
-                // 단계 정보
-                VStack(alignment: .leading, spacing: 2) {
-                    HStack(spacing: 6) {
-                        Text(t.stageLabels[stage - 1])
-                            .font(.system(size: 15, weight: .medium))
+                    if isHeart {
+                        Text("❤️")
+                            .font(.system(size: 22))
+                    } else {
+                        Text("\(Int(config.bpm))")
+                            .font(.system(size: 16, weight: .light, design: .monospaced))
                             .foregroundColor(AppColors.white80)
-
-                        Text("\(Int(config.bpm)) BPM")
-                            .font(.system(size: 11, weight: .light))
-                            .foregroundColor(AppColors.goldDim)
                     }
-
-                    Text(t.stageDescriptions[stage - 1])
-                        .font(.system(size: 11, weight: .light))
-                        .foregroundColor(AppColors.white30)
                 }
 
-                Spacer()
-
-                // 가이드 빛 표시
-                if config.hasGuideLight {
-                    Image(systemName: "circle.fill")
-                        .font(.system(size: 6))
-                        .foregroundColor(AppColors.goldDim)
-                }
+                // 단계 이름
+                Text(t.stageLabels[stage - 1])
+                    .font(.system(size: 11, weight: .light))
+                    .foregroundColor(AppColors.white50)
+                    .tracking(0.5)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(AppColors.surface)
-            )
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
