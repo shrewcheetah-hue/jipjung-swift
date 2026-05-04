@@ -42,7 +42,7 @@ struct PracticeView: View {
                         timingRing
                     }
                 }
-                .frame(width: 300, height: 300)
+                .frame(width: 360, height: 360)
 
                 Spacer()
 
@@ -119,8 +119,8 @@ struct PracticeView: View {
 
     // MARK: - Timing Ring
     private var timingRing: some View {
-        let maxRadius: CGFloat = 140
-        let minRadius: CGFloat = 50
+        let maxRadius: CGFloat = 175
+        let minRadius: CGFloat = 65
         let currentRadius = maxRadius - (maxRadius - minRadius) * CGFloat(engine.ringProgress)
 
         return ZStack {
@@ -194,7 +194,7 @@ struct PracticeView: View {
                     Image("moktak")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 140, height: 140)
+                        .frame(width: 220, height: 220)
                         .scaleEffect(hitFeedbackScale)
                 } else {
                     // 폴백: 원형 목탁 심볼
@@ -204,9 +204,9 @@ struct PracticeView: View {
                             .overlay(
                                 Circle().stroke(AppColors.goldAlpha15, lineWidth: 1)
                             )
-                            .frame(width: 120, height: 120)
+                            .frame(width: 200, height: 200)
                         Text("木鐸")
-                            .font(.system(size: 22, weight: .thin))
+                            .font(.system(size: 40, weight: .thin))
                             .foregroundColor(AppColors.goldDim)
                     }
                     .scaleEffect(hitFeedbackScale)
