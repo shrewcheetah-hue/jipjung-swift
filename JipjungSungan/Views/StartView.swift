@@ -72,17 +72,24 @@ struct StartView: View {
             // 외부 원
             Circle()
                 .stroke(AppColors.goldAlpha15, lineWidth: 1)
-                .frame(width: 120, height: 120)
+                .frame(width: 140, height: 140)
 
             // 내부 원
             Circle()
                 .stroke(AppColors.goldAlpha30, lineWidth: 1)
-                .frame(width: 80, height: 80)
+                .frame(width: 100, height: 100)
 
-            // 목탁 심볼
-            Text("☸")
-                .font(.system(size: 36))
-                .foregroundColor(AppColors.goldDim)
+            // 목탁 이미지
+            if UIImage(named: "moktak") != nil {
+                Image("moktak")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+            } else {
+                Text("木鐸")
+                    .font(.system(size: 28, weight: .thin))
+                    .foregroundColor(AppColors.goldDim)
+            }
         }
     }
 

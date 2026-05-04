@@ -157,46 +157,62 @@ struct PracticeView: View {
 
     // MARK: - Moktak Tap Area
     private var moktakTapArea: some View {
-        Button(action: {
+        // 탭 횟수 기반 glow 강도 (0~1, 최대 30회)
+        let glowIntensity = min(Double(engine.totalHits) / 30.0, 1.0)
+        let glowRadius = 20.0 + glowIntensity * 60.0
+        let glowOpacity = 0.15 + glowIntensity * 0.55
+
+        return Button(action: {
             engine.onHit()
             withAnimation(.easeOut(duration: 0.08)) {
                 tapFlash = true
-                hitFeedbackScale = 0.95
+                hitFeedbackScale = 0.94
             }
-            withAnimation(.easeIn(duration: 0.12).delay(0.08)) {
+            withAnimation(.easeIn(duration: 0.15).delay(0.08)) {
                 tapFlash = false
                 hitFeedbackScale = 1.0
             }
         }) {
             ZStack {
-                // 목탁 원형 배경
-                Circle()
-                    .fill(AppColors.surface)
-                    .overlay(
-                        Circle()
-                            .stroke(AppColors.goldAlpha15, lineWidth: 1)
-                    )
-                    .frame(width: 90, height: 90)
-
-                // 탭 플래시
+                // 탭할수록 강해지는 뒤쪽 glow (황금빛 후광)
                 Circle()
                     .fill(AppColors.gold)
-                    .frame(width: 90, height: 90)
-                    .opacity(tapFlash ? 0.15 : 0)
+                    .frame(width: 120, height: 120)
+                    .blur(radius: glowRadius)
+                    .opacity(glowOpacity)
+                    .animation(.easeOut(duration: 0.3), value: engine.totalHits)
 
-                // 목탁 심볼
-                VStack(spacing: 4) {
-                    Text("☸")
-                        .font(.system(size: 28))
-                        .foregroundColor(AppColors.goldDim)
-                    Text("목탁")
-                        .font(.system(size: 9, weight: .thin))
-                        .foregroundColor(AppColors.white30)
-                        .tracking(2)
+                // 탭 플래시 (순간 번쩍)
+                Circle()
+                    .fill(AppColors.gold)
+                    .frame(width: 140, height: 140)
+                    .blur(radius: 30)
+                    .opacity(tapFlash ? 0.5 : 0)
+
+                // 목탁 이미지
+                if UIImage(named: "moktak") != nil {
+                    Image("moktak")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 140, height: 140)
+                        .scaleEffect(hitFeedbackScale)
+                } else {
+                    // 폴백: 원형 목탁 심볼
+                    ZStack {
+                        Circle()
+                            .fill(AppColors.surface)
+                            .overlay(
+                                Circle().stroke(AppColors.goldAlpha15, lineWidth: 1)
+                            )
+                            .frame(width: 120, height: 120)
+                        Text("木鐸")
+                            .font(.system(size: 22, weight: .thin))
+                            .foregroundColor(AppColors.goldDim)
+                    }
+                    .scaleEffect(hitFeedbackScale)
                 }
             }
         }
-        .scaleEffect(hitFeedbackScale)
         .buttonStyle(PlainButtonStyle())
     }
 
