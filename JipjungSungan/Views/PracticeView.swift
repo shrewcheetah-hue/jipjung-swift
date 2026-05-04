@@ -143,9 +143,8 @@ struct PracticeView: View {
                 .frame(width: minRadius * 2, height: minRadius * 2)
                 .opacity(fixedOpacity)
                 .animation(.easeOut(duration: 0.08), value: ringFlash)
-        }}
+        }
     }
-
     private var ringColor: Color {
         switch engine.lastHitResult {
         case .perfect: return AppColors.perfect
