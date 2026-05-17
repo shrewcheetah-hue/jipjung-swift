@@ -23,22 +23,22 @@ struct StartView: View {
                     // 목탁 영역 (화면 상단 절반)
                     moktakSection(width: geo.size.width)
 
-                    Spacer().frame(height: 32)
+                    Spacer().frame(height: 20)
 
                     // 설명 텍스트
                     descriptionText
 
-                    Spacer().frame(height: 40)
+                    Spacer().frame(height: 24)
 
                     // 하단 단계 선택 버튼 (원형 BPM)
                     stageCircleButtons
 
-                    Spacer().frame(height: 28)
+                    Spacer().frame(height: 20)
 
                     // 하단 버튼 행 (달의 기운 + 자유치기)
                     bottomButtons
 
-                    Spacer().frame(height: 40)
+                    Spacer().frame(height: 24)
                 }
             }
         }
@@ -52,7 +52,7 @@ struct StartView: View {
 
     // MARK: - Moktak Section
     private func moktakSection(width: CGFloat) -> some View {
-        let imgSize = width * 0.62
+        let imgSize = width * 0.50
 
         return ZStack {
             // 뒤쪽 부드러운 원형 glow
