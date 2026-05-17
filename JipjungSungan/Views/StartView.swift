@@ -116,16 +116,22 @@ struct StartView: View {
     private var bottomButtons: some View {
         VStack(spacing: 12) {
             Button(action: onFreePlay) {
-                Text("자유치기")
-                    .font(.system(size: 12, weight: .light))
-                    .foregroundColor(AppColors.white50)
-                    .tracking(1)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 18)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(AppColors.white10, lineWidth: 1)
-                    )
+                HStack(spacing: 6) {
+                    Image("moktak")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                    Text("자유치기")
+                        .font(.system(size: 12, weight: .light))
+                        .tracking(1)
+                }
+                .foregroundColor(AppColors.white50)
+                .padding(.vertical, 10)
+                .padding(.horizontal, 18)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(AppColors.white10, lineWidth: 1)
+                )
             }
             Button(action: onCalendar) {
                 Text(t.calendarButton)
