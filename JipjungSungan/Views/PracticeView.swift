@@ -133,13 +133,13 @@ struct PracticeView: View {
         return ZStack {
             // 수축하는 링
             Circle()
-                .stroke(ringFlash ? AppColors.silverWhite : ringColor, lineWidth: lineW)
+                .stroke(ringFlash ? AppColors.silverWhite : AppColors.metallicBronze, lineWidth: lineW)
                 .frame(width: currentRadius * 2, height: currentRadius * 2)
                 .opacity(ringOpacity)
                 .animation(.easeOut(duration: 0.08), value: ringFlash)
             // 중앙 고정 원 (타격 지점)
             Circle()
-                .stroke(ringFlash ? AppColors.silverWhite : AppColors.metallicBronzeAlpha30, lineWidth: fixedLineW)
+                .stroke(ringFlash ? AppColors.silverWhite : AppColors.metallicBronze, lineWidth: fixedLineW)
                 .frame(width: minRadius * 2, height: minRadius * 2)
                 .opacity(fixedOpacity)
                 .animation(.easeOut(duration: 0.08), value: ringFlash)
@@ -248,7 +248,7 @@ struct PracticeView: View {
             HStack(spacing: 8) {
                 ForEach(0..<engine.stageConfig.promoteThreshold, id: \.self) { i in
                     Circle()
-                        .fill(i < Int(engine.promoteProgress) ? AppColors.metallicBronze : AppColors.white10)
+                        .fill(i < Int(engine.promoteProgress) ? AppColors.silverWhite : AppColors.white10)
                         .frame(width: 8, height: 8)
                         .animation(.easeInOut(duration: 0.2), value: engine.promoteProgress)
                 }

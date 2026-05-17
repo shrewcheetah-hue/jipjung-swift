@@ -164,12 +164,12 @@ struct StageCircleButton: View {
                         .overlay(
                             Circle()
                                 .stroke(
-                                    isHeart ? AppColors.silverWhiteAlpha30 : AppColors.metallicBronzeAlpha30,
-                                    lineWidth: isHeart ? 1.5 : 1
+                                    AppColors.metallicBronze,
+                                    lineWidth: 1
                                 )
                         )
-                        // 심장 원 실버 후광
-                        .shadow(color: isHeart ? AppColors.silverWhiteAlpha15 : Color.clear, radius: 8, x: 0, y: 0)
+                        // 심장 원: NeonGlowPink 후광
+                        .shadow(color: isHeart ? AppColors.neonGlowPinkAlpha40 : Color.clear, radius: 10, x: 0, y: 0)
                         .frame(width: 58, height: 58)
 
                     if isHeart {

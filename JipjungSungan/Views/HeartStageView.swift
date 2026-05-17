@@ -180,12 +180,12 @@ struct HeartStageView: View {
         ZStack {
             // 외부 원
             Circle()
-                .stroke(AppColors.metallicBronzeAlpha15, lineWidth: 1)
+                .stroke(AppColors.metallicBronze, lineWidth: 1)
                 .frame(width: 150, height: 150)
 
             // 내부 원 (심박에 맞춰 펄스)
             Circle()
-                .stroke(AppColors.silverWhiteAlpha30, lineWidth: 1.5)
+                .stroke(AppColors.metallicBronze, lineWidth: 1)
                 .frame(width: 100, height: 100)
                 .scaleEffect(heartPulse ? 1.12 : 1.0)
                 .animation(.easeOut(duration: 0.15), value: heartPulse)
@@ -205,6 +205,7 @@ struct HeartStageView: View {
                     Image(systemName: "heart")
                         .font(.system(size: 28))
                         .foregroundColor(AppColors.goldDim)
+                        .shadow(color: AppColors.neonGlowPinkAlpha40, radius: 8, x: 0, y: 0)
 
                     Text("탭으로 측정")
                         .font(.system(size: 11, weight: .light))
@@ -230,6 +231,7 @@ struct HeartStageView: View {
                     Image(systemName: "heart.fill")
                         .font(.system(size: 22))
                         .foregroundColor(AppColors.gold)
+                        .shadow(color: AppColors.neonGlowPinkAlpha40, radius: 10, x: 0, y: 0)
 
                     Text(t.heartTapButton)
                         .font(.system(size: 14, weight: .light))
