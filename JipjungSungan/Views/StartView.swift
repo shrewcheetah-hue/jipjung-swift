@@ -117,8 +117,11 @@ struct StartView: View {
         VStack(spacing: 12) {
             Button(action: onFreePlay) {
                 HStack(spacing: 6) {
-                    Image(systemName: "hand.tap")
-                        .font(.system(size: 11))
+                    Image("moktak")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16)
+                        .opacity(0.7)
                     Text("자유치기")
                         .font(.system(size: 12, weight: .light))
                         .tracking(1)
