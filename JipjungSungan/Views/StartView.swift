@@ -117,7 +117,7 @@ struct StartView: View {
         VStack(spacing: 12) {
             Button(action: onFreePlay) {
                 HStack(spacing: 6) {
-                    Image("moktak")
+                    Image("moktak_free")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
