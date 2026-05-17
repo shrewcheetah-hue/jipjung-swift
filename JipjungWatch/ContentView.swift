@@ -40,7 +40,7 @@ struct ContentView: View {
                             )
                             .scaleEffect(isPressed ? 0.93 : 1.0)
 
-                        Image("moktak")
+                        Image("moktak", bundle: .main)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 54, height: 54)
