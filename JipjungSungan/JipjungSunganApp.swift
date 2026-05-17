@@ -6,6 +6,9 @@ import AVFoundation
 
 @main
 struct JipjungSunganApp: App {
+    // WatchConnectivity 세션 초기화 (앱 시작 시 활성화)
+    private let watchHeartManager = WatchHeartManager.shared
+
     init() {
         setupAudioSession()
     }

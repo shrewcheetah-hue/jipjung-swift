@@ -1,13 +1,12 @@
 import SwiftUI
 import WatchKit
-
-// 집중의 순간 Watch - 자유치기
+// 집중의 순간 Watch - 자유치기 + 심박수 측정
 // MetallicBronze(#B18F7C) 원 테두리, 어두운 배경
 
 struct ContentView: View {
-
     @State private var count: Int = 0
     @State private var isPressed: Bool = false
+    @StateObject private var heartManager = HeartRateManager.shared
 
     let bronze = Color(red: 0.694, green: 0.561, blue: 0.486)
     let ivory  = Color(red: 0.918, green: 0.902, blue: 0.882)
@@ -17,20 +16,40 @@ struct ContentView: View {
             Color(red: 0.07, green: 0.06, blue: 0.05)
                 .ignoresSafeArea()
 
-            VStack(spacing: 12) {
-
+            VStack(spacing: 8) {
                 // 타수 카운트
                 Text("\(count)")
-                    .font(.system(size: 36, weight: .thin))
+                    .font(.system(size: 32, weight: .thin))
                     .foregroundColor(ivory)
                     .monospacedDigit()
+
+                // 심박수 표시
+                if let bpm = heartManager.currentBPM {
+                    HStack(spacing: 4) {
+                        Image(systemName: "heart.fill")
+                            .font(.system(size: 10))
+                            .foregroundColor(.red)
+                        Text("\(Int(bpm))")
+                            .font(.system(size: 13, weight: .light, design: .monospaced))
+                            .foregroundColor(bronze)
+                    }
+                } else if heartManager.isMonitoring {
+                    HStack(spacing: 4) {
+                        Image(systemName: "heart")
+                            .font(.system(size: 10))
+                            .foregroundColor(bronze.opacity(0.5))
+                        Text("측정중...")
+                            .font(.system(size: 11, weight: .light))
+                            .foregroundColor(bronze.opacity(0.5))
+                    }
+                }
 
                 // 목탁 버튼
                 Button(action: tap) {
                     ZStack {
                         Circle()
                             .fill(Color(red: 0.12, green: 0.10, blue: 0.09))
-                            .frame(width: 90, height: 90)
+                            .frame(width: 84, height: 84)
                             .overlay(
                                 Circle()
                                     .stroke(
@@ -43,7 +62,7 @@ struct ContentView: View {
                         Image("moktak", bundle: .main)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 54, height: 54)
+                            .frame(width: 50, height: 50)
                             .scaleEffect(isPressed ? 0.90 : 1.0)
                     }
                 }
@@ -58,6 +77,16 @@ struct ContentView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
             }
+        }
+        .onAppear {
+            heartManager.requestAuthorization { success in
+                if success {
+                    heartManager.startMonitoring()
+                }
+            }
+        }
+        .onDisappear {
+            heartManager.stopMonitoring()
         }
     }
 

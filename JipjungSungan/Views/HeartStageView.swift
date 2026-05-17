@@ -1,7 +1,7 @@
 import SwiftUI
 
 // 집중의 순간 - 5단계 소원빌기 화면
-// 무념무상 or 소원빌기 선택 → 심박수 측정 → 수행 시작
+// 무념무상 or 소원빌기 선택 → 심박수 측정 (Watch 또는 탭) → 수행 시작
 
 enum HeartPracticeMode {
     case empty   // 무념무상
@@ -12,6 +12,7 @@ struct HeartStageView: View {
     let onStart: (Double) -> Void
     let onBack: () -> Void
 
+    @ObservedObject private var watchManager = WatchHeartManager.shared
     @State private var selectedMode: HeartPracticeMode? = nil
     @State private var tapTimes: [Date] = []
     @State private var measuredBpm: Double? = nil
@@ -20,6 +21,11 @@ struct HeartStageView: View {
 
     private let minTaps = 4
     private let maxTaps = 12
+
+    // Watch BPM이 있으면 Watch BPM 우선, 없으면 탭 BPM
+    private var effectiveBpm: Double? {
+        watchManager.receivedBPM ?? measuredBpm
+    }
 
     var body: some View {
         ZStack {
@@ -89,14 +95,17 @@ struct HeartStageView: View {
 
                 Spacer().frame(height: 32)
 
-                // 탭 버튼
-                tapButton
-
-                Spacer().frame(height: 16)
-
-                // 리셋 버튼
-                if !tapTimes.isEmpty {
-                    resetButton
+                // Watch 연결 상태에 따라 탭 버튼 표시 여부 결정
+                if watchManager.receivedBPM == nil {
+                    // Watch BPM 없으면 탭으로 측정
+                    tapButton
+                    Spacer().frame(height: 16)
+                    if !tapTimes.isEmpty {
+                        resetButton
+                    }
+                } else {
+                    // Watch BPM 수신 중 안내
+                    watchBpmStatus
                 }
 
                 Spacer().frame(height: 20)
@@ -119,6 +128,15 @@ struct HeartStageView: View {
         .onAppear {
             withAnimation(.easeIn(duration: 0.4)) {
                 appear = true
+            }
+        }
+        .onChange(of: watchManager.receivedBPM) { bpm in
+            if bpm != nil {
+                // Watch BPM 수신 시 심박 펄스 애니메이션
+                heartPulse = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    heartPulse = false
+                }
             }
         }
     }
@@ -192,15 +210,22 @@ struct HeartStageView: View {
 
             // BPM 표시
             VStack(spacing: 4) {
-                if let bpm = measuredBpm {
+                if let bpm = effectiveBpm {
                     Text("\(Int(bpm))")
                         .font(.system(size: 38, weight: .thin, design: .monospaced))
                         .foregroundColor(AppColors.gold)
 
-                    Text("BPM")
-                        .font(.system(size: 12, weight: .light))
-                        .foregroundColor(AppColors.goldDim)
-                        .tracking(2)
+                    HStack(spacing: 4) {
+                        if watchManager.receivedBPM != nil {
+                            Image(systemName: "applewatch")
+                                .font(.system(size: 10))
+                                .foregroundColor(AppColors.goldDim)
+                        }
+                        Text("BPM")
+                            .font(.system(size: 12, weight: .light))
+                            .foregroundColor(AppColors.goldDim)
+                            .tracking(2)
+                    }
                 } else {
                     Image(systemName: "heart")
                         .font(.system(size: 28))
@@ -214,6 +239,20 @@ struct HeartStageView: View {
                 }
             }
         }
+    }
+
+    // MARK: - Watch BPM 상태 표시
+    private var watchBpmStatus: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "applewatch.watchface")
+                .font(.system(size: 14))
+                .foregroundColor(AppColors.gold)
+            Text("Apple Watch에서 심박수 수신 중")
+                .font(.system(size: 13, weight: .light))
+                .foregroundColor(AppColors.white50)
+                .tracking(0.5)
+        }
+        .padding(.horizontal, 40)
     }
 
     // MARK: - Tap Button
@@ -264,13 +303,13 @@ struct HeartStageView: View {
 
     // MARK: - Start Button
     private var startButton: some View {
-        let canStart = measuredBpm != nil
+        let canStart = effectiveBpm != nil
         return Button(action: {
-            if let bpm = measuredBpm {
+            if let bpm = effectiveBpm {
                 onStart(bpm)
             }
         }) {
-            Text(t.heartStartButton(bpm: measuredBpm.map { Int($0) }))
+            Text(t.heartStartButton(bpm: effectiveBpm.map { Int($0) }))
                 .font(.system(size: 15, weight: .light))
                 .foregroundColor(canStart ? AppColors.gold : AppColors.white30)
                 .tracking(1)
