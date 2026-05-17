@@ -114,45 +114,36 @@ struct StartView: View {
 
     // MARK: - Bottom Buttons
     private var bottomButtons: some View {
-        let iconSize: CGFloat = 22
         let btnWidth: CGFloat = 160
         return VStack(spacing: 12) {
-            Button(action: onFreePlay) {
-                HStack(alignment: .center, spacing: 8) {
-                    Image("moktak_free")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: iconSize, height: iconSize)
-                    Text("자유치기")
-                        .font(.system(size: 12, weight: .light))
-                        .tracking(1)
-                }
-                .foregroundColor(AppColors.white40)
-                .frame(width: btnWidth)
-                .padding(.vertical, 10)
-                .background(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(AppColors.white10, lineWidth: 1)
-                )
+            bottomButton(icon: "moktak_free", iconSize: 20, label: "자유치기", action: onFreePlay)
+            bottomButton(icon: "moon_icon", iconSize: 24, label: "달의 기운", action: onCalendar)
+        }
+        .frame(width: btnWidth)
+    }
+
+    private func bottomButton(icon: String, iconSize: CGFloat, label: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 0) {
+                Image(icon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 28, height: 28)
+                    .scaleEffect(iconSize / 28)
+                Spacer().frame(width: 8)
+                Text(label)
+                    .font(.system(size: 12, weight: .light))
+                    .tracking(1)
+                    .foregroundColor(AppColors.white40)
+                Spacer()
             }
-            Button(action: onCalendar) {
-                HStack(alignment: .center, spacing: 8) {
-                    Image("moon_icon")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: iconSize, height: iconSize)
-                    Text("달의 기운")
-                        .font(.system(size: 12, weight: .light))
-                        .tracking(1)
-                }
-                .foregroundColor(AppColors.white40)
-                .frame(width: btnWidth)
-                .padding(.vertical, 10)
-                .background(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(AppColors.white10, lineWidth: 1)
-                )
-            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(AppColors.white10, lineWidth: 1)
+            )
         }
     }
 }
