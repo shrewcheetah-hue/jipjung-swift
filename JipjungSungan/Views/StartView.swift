@@ -181,8 +181,10 @@ struct StageCircleButton: View {
                         .frame(width: 58, height: 58)
 
                     if isHeart {
-                        Text("❤️")
-                            .font(.system(size: 22))
+                        Image("heart_icon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
                     } else {
                         Text("\(Int(config.bpm))")
                             .font(.system(size: 16, weight: .light, design: .monospaced))
