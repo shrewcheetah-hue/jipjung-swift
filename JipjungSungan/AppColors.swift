@@ -29,4 +29,24 @@ struct AppColors {
 
     // 빨간색 (일요일)
     static let red = Color(red: 0.80, green: 0.35, blue: 0.30)
+
+    // --- 새 팔레트 ---
+    // 로즈 골드 + 브론즈 #B18F7C - 원 게이지 포인트
+    static let metallicBronze = Color(red: 0.694, green: 0.561, blue: 0.486)
+    static let metallicBronzeAlpha30 = Color(red: 0.694, green: 0.561, blue: 0.486).opacity(0.30)
+    static let metallicBronzeAlpha15 = Color(red: 0.694, green: 0.561, blue: 0.486).opacity(0.15)
+
+    // 밝은 실버 화이트 #E5E9F0 - 심장 원 후광
+    static let silverWhite = Color(red: 0.898, green: 0.914, blue: 0.941)
+    static let silverWhiteAlpha30 = Color(red: 0.898, green: 0.914, blue: 0.941).opacity(0.30)
+    static let silverWhiteAlpha15 = Color(red: 0.898, green: 0.914, blue: 0.941).opacity(0.15)
+
+    // 은은한 핑크/레드 네온 #FF4B72 - 하단 박스 테두리
+    static let neonGlowPink = Color(red: 1.0, green: 0.294, blue: 0.447)
+    static let neonGlowPinkAlpha40 = Color(red: 1.0, green: 0.294, blue: 0.447).opacity(0.40)
+    static let neonGlowPinkAlpha20 = Color(red: 1.0, green: 0.294, blue: 0.447).opacity(0.20)
+
+    // 톤다운된 쿠퍼 / 어두운 웜 그레이 #4E433B - 하단 박스 테두리
+    static let darkCopper = Color(red: 0.306, green: 0.263, blue: 0.231)
+    static let darkCopperAlpha60 = Color(red: 0.306, green: 0.263, blue: 0.231).opacity(0.60)
 }

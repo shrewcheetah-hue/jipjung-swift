@@ -127,7 +127,7 @@ struct StartView: View {
             // 아이콘+텍스트 묶음을 하나의 단위로 보고 버튼 중앙에 배치
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(AppColors.white10, lineWidth: 1)
+                    .stroke(AppColors.darkCopper, lineWidth: 1)
                     .frame(width: 160, height: 44)
 
                 HStack(alignment: .center, spacing: 8) {
@@ -164,10 +164,12 @@ struct StageCircleButton: View {
                         .overlay(
                             Circle()
                                 .stroke(
-                                    isHeart ? AppColors.goldAlpha30 : AppColors.goldAlpha15,
+                                    isHeart ? AppColors.silverWhiteAlpha30 : AppColors.metallicBronzeAlpha30,
                                     lineWidth: isHeart ? 1.5 : 1
                                 )
                         )
+                        // 심장 원 실버 후광
+                        .shadow(color: isHeart ? AppColors.silverWhiteAlpha15 : Color.clear, radius: 8, x: 0, y: 0)
                         .frame(width: 58, height: 58)
 
                     if isHeart {
