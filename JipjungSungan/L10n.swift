@@ -66,11 +66,11 @@ struct L10n {
 
     var stageLabels: [String] {
         switch lang {
-        case "ko": return ["따라가기", "느끼기", "전환하기", "내면보기", "소원"]
-        case "ja": return ["従う", "感じる", "転換", "内面", "願い"]
-        case "zh": return ["跟随", "感受", "转换", "内心", "祈愿"]
+        case "ko": return ["따라가기", "느끼기", "전환하기", "내면보기", "심장"]
+        case "ja": return ["従う", "感じる", "転換", "内面", "心臓"]
+        case "zh": return ["跟随", "感受", "转换", "内心", "心跳"]
         case "fr": return ["Suivre", "Ressentir", "Transition", "Intérieur", "Cœur"]
-        default:   return ["Follow", "Feel", "Shift", "Inner", "Wish"]
+        default:   return ["Follow", "Feel", "Shift", "Inner", "Heart"]
         }
     }
 
@@ -147,7 +147,7 @@ struct L10n {
 
     var stageDescriptions: [String] {
         switch lang {
-        case "ko": return ["템포를 따라 쳐주세요", "소리를 느끼며 쳐주세요", "진동을 느끼며 쳐주세요", "내 안의 리듬으로 쳐주세요", "마음속 소원을 품고 쳐주세요"]
+        case "ko": return ["템포를 따라 쳐주세요", "소리를 느끼며 쳐주세요", "진동을 느끼며 쳐주세요", "내 안의 리듬으로 쳐주세요", "당신의 심장소리가 목탁을 칩니다"]
         case "ja": return ["テンポに合わせて叩いてください", "音を感じながら叩いてください", "振動を感じながら叩いてください", "内なるリズムで叩いてください", "心臓のリズムで叩いてください"]
         case "zh": return ["跟随节拍敲击", "感受声音敲击", "感受振动敲击", "用内心的节奏敲击", "用心跳的节奏敲击"]
         case "fr": return ["Suivez le tempo", "Ressentez le son", "Ressentez la vibration", "Suivez votre rythme intérieur", "Suivez votre rythme cardiaque"]
@@ -168,17 +168,17 @@ struct L10n {
     // MARK: - Heart Stage
     var heartTitle: String {
         switch lang {
-        case "ko": return "5단계 · 소원빌기"
-        case "ja": return "第5段階 · 願いを込めて"
-        case "zh": return "第5阶段 · 许愿"
-        case "fr": return "Étape 5 · Vœu"
-        default:   return "Stage 5 · Make a Wish"
+        case "ko": return "5단계 · 심장의 리듬"
+        case "ja": return "第5段階 · 心臓のリズム"
+        case "zh": return "第5阶段 · 心跳节奏"
+        case "fr": return "Étape 5 · Rythme cardiaque"
+        default:   return "Stage 5 · Heart Rhythm"
         }
     }
 
     var heartSubtitle: String {
         switch lang {
-        case "ko": return "마음속 소원을 품고 목탁을 칩니다"
+        case "ko": return "당신의 심장소리가 목탁을 칩니다"
         case "ja": return "私の心臓が木魚を叩きます"
         case "zh": return "我的心跳敲响木鱼"
         case "fr": return "Mon cœur frappe le moktak"

@@ -167,11 +167,11 @@ struct HeartStageView: View {
     private var modeDescription: String {
         switch selectedMode {
         case .empty:
-            return "소리에만 집중하세요.\n생각이 오면 그냥 흘려보내세요."
+            return "생각을 비우세요.\n소리만 남기고, 나머지는 흐르도록 두세요."
         case .wish:
-            return "심박수에 맞춰 목탁이 울립니다.\n치는 동안 마음속으로 소원을 빌어보세요."
+            return "마음속에 소원을 조용히 품으세요.\n목탁 소리가 그 말을 우주로 전합니다."
         case nil:
-            return t.heartDesc
+            return "심장 박동에 맞춰 화면을 탭하세요.\n측정된 BPM으로 목탁이 울립니다."
         }
     }
 
