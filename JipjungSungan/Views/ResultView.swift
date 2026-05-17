@@ -167,10 +167,10 @@ struct ResultView: View {
                 .padding(.horizontal, 40)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(AppColors.goldAlpha08)
+                        .fill(AppColors.metallicBronzeAlpha15)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(AppColors.goldAlpha30, lineWidth: 1)
+                                .stroke(AppColors.metallicBronzeAlpha30, lineWidth: 1)
                         )
                 )
         }
@@ -207,6 +207,10 @@ struct StatCard: View {
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .fill(AppColors.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(AppColors.darkCopper, lineWidth: 1)
+                )
         )
     }
 }

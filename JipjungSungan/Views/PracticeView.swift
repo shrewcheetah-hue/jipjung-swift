@@ -133,13 +133,13 @@ struct PracticeView: View {
         return ZStack {
             // 수축하는 링
             Circle()
-                .stroke(ringFlash ? AppColors.goldBright : ringColor, lineWidth: lineW)
+                .stroke(ringFlash ? AppColors.silverWhite : ringColor, lineWidth: lineW)
                 .frame(width: currentRadius * 2, height: currentRadius * 2)
                 .opacity(ringOpacity)
                 .animation(.easeOut(duration: 0.08), value: ringFlash)
             // 중앙 고정 원 (타격 지점)
             Circle()
-                .stroke(ringFlash ? AppColors.goldBright : AppColors.goldAlpha30, lineWidth: fixedLineW)
+                .stroke(ringFlash ? AppColors.silverWhite : AppColors.metallicBronzeAlpha30, lineWidth: fixedLineW)
                 .frame(width: minRadius * 2, height: minRadius * 2)
                 .opacity(fixedOpacity)
                 .animation(.easeOut(duration: 0.08), value: ringFlash)
@@ -217,7 +217,7 @@ struct PracticeView: View {
                         Circle()
                             .fill(AppColors.surface)
                             .overlay(
-                                Circle().stroke(AppColors.goldAlpha15, lineWidth: 1)
+                                Circle().stroke(AppColors.metallicBronzeAlpha15, lineWidth: 1)
                             )
                             .frame(width: 200, height: 200)
                         Text("木鐸")
@@ -248,7 +248,7 @@ struct PracticeView: View {
             HStack(spacing: 8) {
                 ForEach(0..<engine.stageConfig.promoteThreshold, id: \.self) { i in
                     Circle()
-                        .fill(i < Int(engine.promoteProgress) ? AppColors.gold : AppColors.white10)
+                        .fill(i < Int(engine.promoteProgress) ? AppColors.metallicBronze : AppColors.white10)
                         .frame(width: 8, height: 8)
                         .animation(.easeInOut(duration: 0.2), value: engine.promoteProgress)
                 }
@@ -301,7 +301,7 @@ struct PracticeView: View {
                 .padding(.horizontal, 24)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
-                        .stroke(AppColors.white10, lineWidth: 1)
+                        .stroke(AppColors.darkCopper, lineWidth: 1)
                 )
         }
     }

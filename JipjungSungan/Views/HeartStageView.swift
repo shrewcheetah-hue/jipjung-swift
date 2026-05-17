@@ -137,7 +137,7 @@ struct HeartStageView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(AppColors.goldAlpha15, lineWidth: 1)
+                .stroke(AppColors.metallicBronzeAlpha15, lineWidth: 1)
         )
         .padding(.horizontal, 48)
     }
@@ -151,13 +151,13 @@ struct HeartStageView: View {
         }) {
             Text(title)
                 .font(.system(size: 13, weight: isSelected ? .regular : .light))
-                .foregroundColor(isSelected ? AppColors.gold : AppColors.white30)
+                .foregroundColor(isSelected ? AppColors.metallicBronze : AppColors.white30)
                 .tracking(1)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
                 .background(
                     isSelected
-                        ? AppColors.goldAlpha08
+                        ? AppColors.metallicBronzeAlpha15
                         : Color.clear
                 )
         }
@@ -180,12 +180,12 @@ struct HeartStageView: View {
         ZStack {
             // 외부 원
             Circle()
-                .stroke(AppColors.goldAlpha15, lineWidth: 1)
+                .stroke(AppColors.metallicBronzeAlpha15, lineWidth: 1)
                 .frame(width: 150, height: 150)
 
             // 내부 원 (심박에 맞춰 펄스)
             Circle()
-                .stroke(AppColors.goldAlpha30, lineWidth: 1.5)
+                .stroke(AppColors.silverWhiteAlpha30, lineWidth: 1.5)
                 .frame(width: 100, height: 100)
                 .scaleEffect(heartPulse ? 1.12 : 1.0)
                 .animation(.easeOut(duration: 0.15), value: heartPulse)
@@ -220,10 +220,10 @@ struct HeartStageView: View {
         Button(action: onTap) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(AppColors.goldAlpha08)
+                    .fill(AppColors.metallicBronzeAlpha15)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(AppColors.goldAlpha30, lineWidth: 1)
+                            .stroke(AppColors.silverWhiteAlpha30, lineWidth: 1)
                     )
 
                 VStack(spacing: 6) {
@@ -276,11 +276,11 @@ struct HeartStageView: View {
                 .padding(.horizontal, 32)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(canStart ? AppColors.goldAlpha15 : AppColors.surface)
+                        .fill(canStart ? AppColors.metallicBronzeAlpha15 : AppColors.surface)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(
-                                    canStart ? AppColors.goldAlpha30 : AppColors.white10,
+                                    canStart ? AppColors.metallicBronzeAlpha30 : AppColors.darkCopper,
                                     lineWidth: 1
                                 )
                         )

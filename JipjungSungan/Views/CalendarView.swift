@@ -229,6 +229,10 @@ struct CalendarView: View {
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(AppColors.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(AppColors.darkCopper, lineWidth: 1)
+                    )
             )
 
             // 오늘인 경우 자정 카운트다운 추가
@@ -264,6 +268,10 @@ struct CalendarView: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(AppColors.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(AppColors.darkCopper, lineWidth: 1)
+                )
         )
     }
 
@@ -341,7 +349,7 @@ struct CalendarDayCell: View {
                         // 선택된 날짜 반투명 배경
                         if isSelected && !isToday {
                             RoundedRectangle(cornerRadius: 6)
-                                .fill(AppColors.goldAlpha08)
+                                .fill(AppColors.metallicBronzeAlpha15)
                                 .frame(width: 32, height: 32)
                         }
 
@@ -426,7 +434,11 @@ struct PrayerTimeRow: View {
         .padding(.horizontal, 12)
         .background(
             RoundedRectangle(cornerRadius: 6)
-                .fill(AppColors.goldAlpha08)
+                .fill(AppColors.metallicBronzeAlpha15)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(AppColors.darkCopper, lineWidth: 1)
+                )
         )
     }
 }
