@@ -18,6 +18,7 @@ struct AppColors {
     // 흰색 계열
     static let white80 = Color.white.opacity(0.80)
     static let white50 = Color.white.opacity(0.50)
+    static let white40 = Color.white.opacity(0.40)
     static let white30 = Color.white.opacity(0.30)
     static let white10 = Color.white.opacity(0.10)
 
