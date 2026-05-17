@@ -114,7 +114,7 @@ struct StartView: View {
 
     // MARK: - Bottom Buttons
     private var bottomButtons: some View {
-        HStack(spacing: 16) {
+        VStack(spacing: 12) {
             Button(action: onCalendar) {
                 Text(t.calendarButton)
                     .font(.system(size: 12, weight: .light))
