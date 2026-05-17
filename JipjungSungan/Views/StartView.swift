@@ -114,32 +114,29 @@ struct StartView: View {
 
     // MARK: - Bottom Buttons
     private var bottomButtons: some View {
-        let btnWidth: CGFloat = 160
-        return VStack(spacing: 12) {
-            bottomButton(icon: "moktak_free", iconSize: 20, label: "자유치기", action: onFreePlay)
-            bottomButton(icon: "moon_icon", iconSize: 24, label: "달의 기운", action: onCalendar)
+        VStack(spacing: 12) {
+            bottomButton(icon: "moktak_free", label: "자유치기", action: onFreePlay)
+            bottomButton(icon: "moon_icon", label: "달의 기운", action: onCalendar)
         }
-        .frame(width: btnWidth)
     }
 
-    private func bottomButton(icon: String, iconSize: CGFloat, label: String, action: @escaping () -> Void) -> some View {
+    private func bottomButton(icon: String, label: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            HStack(spacing: 0) {
+            HStack(spacing: 8) {
+                // 아이콘 고정 영역 24x24
                 Image(icon)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 28, height: 28)
-                    .scaleEffect(iconSize / 28)
-                Spacer().frame(width: 8)
+                    .frame(width: 24, height: 24)
+                // 텍스트 고정 너비
                 Text(label)
                     .font(.system(size: 12, weight: .light))
                     .tracking(1)
                     .foregroundColor(AppColors.white40)
-                Spacer()
+                    .frame(width: 56, alignment: .leading)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 20)
             .padding(.vertical, 10)
-            .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 6)
                     .stroke(AppColors.white10, lineWidth: 1)
