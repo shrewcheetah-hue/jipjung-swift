@@ -66,11 +66,11 @@ struct L10n {
 
     var stageLabels: [String] {
         switch lang {
-        case "ko": return ["따라가기", "느끼기", "전환하기", "내면보기", "심장"]
-        case "ja": return ["従う", "感じる", "転換", "内面", "心臓"]
-        case "zh": return ["跟随", "感受", "转换", "内心", "心跳"]
+        case "ko": return ["따라가기", "느끼기", "전환하기", "내면보기", "소원"]
+        case "ja": return ["従う", "感じる", "転換", "内面", "願い"]
+        case "zh": return ["跟随", "感受", "转换", "内心", "祈愿"]
         case "fr": return ["Suivre", "Ressentir", "Transition", "Intérieur", "Cœur"]
-        default:   return ["Follow", "Feel", "Shift", "Inner", "Heart"]
+        default:   return ["Follow", "Feel", "Shift", "Inner", "Wish"]
         }
     }
 
@@ -147,7 +147,7 @@ struct L10n {
 
     var stageDescriptions: [String] {
         switch lang {
-        case "ko": return ["템포를 따라 쳐주세요", "소리를 느끼며 쳐주세요", "진동을 느끼며 쳐주세요", "내 안의 리듬으로 쳐주세요", "심장의 리듬으로 쳐주세요"]
+        case "ko": return ["템포를 따라 쳐주세요", "소리를 느끼며 쳐주세요", "진동을 느끼며 쳐주세요", "내 안의 리듬으로 쳐주세요", "마음속 소원을 품고 쳐주세요"]
         case "ja": return ["テンポに合わせて叩いてください", "音を感じながら叩いてください", "振動を感じながら叩いてください", "内なるリズムで叩いてください", "心臓のリズムで叩いてください"]
         case "zh": return ["跟随节拍敲击", "感受声音敲击", "感受振动敲击", "用内心的节奏敲击", "用心跳的节奏敲击"]
         case "fr": return ["Suivez le tempo", "Ressentez le son", "Ressentez la vibration", "Suivez votre rythme intérieur", "Suivez votre rythme cardiaque"]
@@ -168,17 +168,17 @@ struct L10n {
     // MARK: - Heart Stage
     var heartTitle: String {
         switch lang {
-        case "ko": return "5단계 · 심장의 리듬"
-        case "ja": return "第5段階 · 心臓のリズム"
-        case "zh": return "第5阶段 · 心跳节奏"
-        case "fr": return "Étape 5 · Rythme cardiaque"
-        default:   return "Stage 5 · Heart Rhythm"
+        case "ko": return "5단계 · 소원빌기"
+        case "ja": return "第5段階 · 願いを込めて"
+        case "zh": return "第5阶段 · 许愿"
+        case "fr": return "Étape 5 · Vœu"
+        default:   return "Stage 5 · Make a Wish"
         }
     }
 
     var heartSubtitle: String {
         switch lang {
-        case "ko": return "내 심장이 목탁을 칩니다"
+        case "ko": return "마음속 소원을 품고 목탁을 칩니다"
         case "ja": return "私の心臓が木魚を叩きます"
         case "zh": return "我的心跳敲响木鱼"
         case "fr": return "Mon cœur frappe le moktak"
@@ -188,7 +188,7 @@ struct L10n {
 
     var heartDesc: String {
         switch lang {
-        case "ko": return "심장 박동에 맞춰 화면을 탭하세요.\n측정된 BPM으로 목탁이 울립니다."
+        case "ko": return "심박수에 맞춰 목탁이 울립니다.\n치는 동안 마음속으로 소원을 빌어보세요."
         case "ja": return "心拍に合わせて画面をタップしてください。\n測定されたBPMで木魚が鳴ります。"
         case "zh": return "按照心跳节奏点击屏幕。\n木鱼将以您的BPM鸣响。"
         case "fr": return "Tapez sur l'écran au rythme de votre cœur.\nLe moktak sonnera à votre BPM."
@@ -228,7 +228,7 @@ struct L10n {
 
     var heartNote: String {
         switch lang {
-        case "ko": return "실시간 심박수로 목탁이 자동으로 울립니다."
+        case "ko": return "소원은 말하지 않아도 됩니다. 마음속에 품으세요."
         case "ja": return "リアルタイムの心拍数で木魚が自動的に鳴ります。"
         case "zh": return "木鱼将自动以您的实时心率鸣响。"
         case "fr": return "Le moktak sonnera automatiquement à votre fréquence cardiaque en temps réel."
