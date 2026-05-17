@@ -113,8 +113,10 @@ struct StartView: View {
     }
 
     // MARK: - Bottom Buttons
+    // 8pt 그리드 기반 버튼 레이아웃
+    // 아이콘(24pt) + 간격(8pt) + 텍스트 묶음이 버튼 중앙에 위치
     private var bottomButtons: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             bottomButton(icon: "moktak_free", label: "자유치기", action: onFreePlay)
             bottomButton(icon: "moon_icon", label: "달의 기운", action: onCalendar)
         }
@@ -122,26 +124,25 @@ struct StartView: View {
 
     private func bottomButton(icon: String, label: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            HStack(spacing: 8) {
-                // 아이콘 고정 영역 24x24
-                Image(icon)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                // 텍스트 고정 너비
-                Text(label)
-                    .font(.system(size: 12, weight: .light))
-                    .tracking(1)
-                    .foregroundColor(AppColors.white40)
-                    .frame(width: 56, alignment: .leading)
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
-            .background(
-                RoundedRectangle(cornerRadius: 6)
+            // 아이콘+텍스트 묶음을 하나의 단위로 보고 버튼 중앙에 배치
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
                     .stroke(AppColors.white10, lineWidth: 1)
-            )
+                    .frame(width: 160, height: 44)
+
+                HStack(alignment: .center, spacing: 8) {
+                    Image(icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 22, height: 22)
+                    Text(label)
+                        .font(.system(size: 13, weight: .light))
+                        .tracking(1.5)
+                        .foregroundColor(AppColors.white40)
+                }
+            }
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
