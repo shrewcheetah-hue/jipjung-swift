@@ -51,7 +51,16 @@ struct HeartStageView: View {
                         .tracking(1)
                 }
 
-                Spacer().frame(height: 48)
+                Spacer().frame(height: 24)
+
+                // 목탁 이미지
+                Image("moktak")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 110, height: 110)
+                    .opacity(0.85)
+
+                Spacer().frame(height: 24)
 
                 // 심박 표시 원
                 heartDisplay
