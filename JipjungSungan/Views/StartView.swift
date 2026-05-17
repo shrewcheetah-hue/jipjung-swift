@@ -114,19 +114,21 @@ struct StartView: View {
 
     // MARK: - Bottom Buttons
     private var bottomButtons: some View {
-        VStack(spacing: 12) {
+        let iconSize: CGFloat = 22
+        let btnWidth: CGFloat = 160
+        return VStack(spacing: 12) {
             Button(action: onFreePlay) {
-                HStack(spacing: 8) {
+                HStack(alignment: .center, spacing: 8) {
                     Image("moktak_free")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 18, height: 18)
+                        .frame(width: iconSize, height: iconSize)
                     Text("자유치기")
                         .font(.system(size: 12, weight: .light))
                         .tracking(1)
                 }
-                .foregroundColor(AppColors.white50)
-                .frame(width: 160)
+                .foregroundColor(AppColors.white40)
+                .frame(width: btnWidth)
                 .padding(.vertical, 10)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
@@ -134,16 +136,16 @@ struct StartView: View {
                 )
             }
             Button(action: onCalendar) {
-                HStack(spacing: 8) {
+                HStack(alignment: .center, spacing: 8) {
                     Text("🌕")
-                        .font(.system(size: 14))
-                        .frame(width: 18, height: 18)
+                        .font(.system(size: iconSize * 0.9))
+                        .frame(width: iconSize, height: iconSize)
                     Text("달의 기운")
                         .font(.system(size: 12, weight: .light))
                         .tracking(1)
                 }
-                .foregroundColor(AppColors.white30)
-                .frame(width: 160)
+                .foregroundColor(AppColors.white40)
+                .frame(width: btnWidth)
                 .padding(.vertical, 10)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
