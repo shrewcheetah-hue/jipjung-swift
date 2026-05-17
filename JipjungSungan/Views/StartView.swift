@@ -115,18 +115,6 @@ struct StartView: View {
     // MARK: - Bottom Buttons
     private var bottomButtons: some View {
         VStack(spacing: 12) {
-            Button(action: onCalendar) {
-                Text(t.calendarButton)
-                    .font(.system(size: 12, weight: .light))
-                    .foregroundColor(AppColors.white30)
-                    .tracking(1)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 18)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(AppColors.white10, lineWidth: 1)
-                    )
-            }
             Button(action: onFreePlay) {
                 HStack(spacing: 6) {
                     Image(systemName: "hand.tap")
@@ -142,6 +130,18 @@ struct StartView: View {
                     RoundedRectangle(cornerRadius: 6)
                         .stroke(AppColors.goldAlpha15, lineWidth: 1)
                 )
+            }
+            Button(action: onCalendar) {
+                Text(t.calendarButton)
+                    .font(.system(size: 12, weight: .light))
+                    .foregroundColor(AppColors.white30)
+                    .tracking(1)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 18)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(AppColors.white10, lineWidth: 1)
+                    )
             }
         }
     }
