@@ -116,7 +116,7 @@ struct StartView: View {
     private var bottomButtons: some View {
         VStack(spacing: 12) {
             Button(action: onFreePlay) {
-                HStack(spacing: 6) {
+                HStack(spacing: 8) {
                     Image("moktak_free")
                         .resizable()
                         .scaledToFit()
@@ -126,24 +126,29 @@ struct StartView: View {
                         .tracking(1)
                 }
                 .foregroundColor(AppColors.white50)
+                .frame(width: 160)
                 .padding(.vertical, 10)
-                .padding(.horizontal, 18)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
                         .stroke(AppColors.white10, lineWidth: 1)
                 )
             }
             Button(action: onCalendar) {
-                Text(t.calendarButton)
-                    .font(.system(size: 12, weight: .light))
-                    .foregroundColor(AppColors.white30)
-                    .tracking(1)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 18)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(AppColors.white10, lineWidth: 1)
-                    )
+                HStack(spacing: 8) {
+                    Text("🌕")
+                        .font(.system(size: 14))
+                        .frame(width: 18, height: 18)
+                    Text("달의 기운")
+                        .font(.system(size: 12, weight: .light))
+                        .tracking(1)
+                }
+                .foregroundColor(AppColors.white30)
+                .frame(width: 160)
+                .padding(.vertical, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(AppColors.white10, lineWidth: 1)
+                )
             }
         }
     }
