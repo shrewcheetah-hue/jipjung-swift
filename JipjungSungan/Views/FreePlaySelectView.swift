@@ -2,7 +2,7 @@ import SwiftUI
 
 // 자유치기 모드 선택 화면
 // 공덕(功德) - 금빛 연꽃 / 업장소멸(業障消滅) - 붉은 불꽃 캐릭터
-// 색상 철학: 공덕=따뜻한 금빛(#C8A84B), 업장소멸=딥 버밀리온(#C0281E) — 같은 채도/명도 레벨로 조화
+// 색상 철학: 공덕=따뜻한 금빛(#C8A84B), 업장소멸=네온 핑크(#FF4B72) — 불꽃의 생동감, 번뇌를 태우는 강렬함
 
 enum FreePlayMode {
     case merit    // 공덕
@@ -11,7 +11,7 @@ enum FreePlayMode {
 
 // 색상 상수
 private let meritGold   = Color(red: 0.784, green: 0.659, blue: 0.294)  // #C8A84B
-private let karmaRed    = Color(red: 0.753, green: 0.157, blue: 0.118)  // #C0281E
+private let karmaRed    = AppColors.neonGlowPink  // #FF4B72 - 불꽃의 생동감
 
 struct FreePlaySelectView: View {
     let onSelect: (FreePlayMode) -> Void

@@ -30,12 +30,12 @@ struct FreePlayView: View {
     private var accentColor: Color {
         mode == .merit
             ? AppColors.gold
-            : Color(red: 0.90, green: 0.45, blue: 0.20)
+            : AppColors.neonGlowPink
     }
     private var glowColor: Color {
         mode == .merit
             ? Color(red: 0.95, green: 0.82, blue: 0.40)
-            : Color(red: 0.95, green: 0.35, blue: 0.15)
+            : AppColors.neonGlowPink
     }
     private var bgColor: Color {
         mode == .merit

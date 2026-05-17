@@ -25,10 +25,10 @@ struct AppColors {
     // 히트 결과 색상
     static let perfect = Color(red: 0.85, green: 0.72, blue: 0.42)  // 금색
     static let near = Color(red: 0.70, green: 0.85, blue: 0.65)      // 연두
-    static let off = Color(red: 0.80, green: 0.40, blue: 0.35)       // 붉은색
+    static let off = Color(red: 1.0, green: 0.294, blue: 0.447)      // neonGlowPink (OFF 판정)
 
-    // 빨간색 (일요일)
-    static let red = Color(red: 0.80, green: 0.35, blue: 0.30)
+    // 빨간색 (일요일) → neonGlowPink 계열
+    static let red = Color(red: 1.0, green: 0.294, blue: 0.447)
 
     // --- 새 팔레트 ---
     // 로즈 골드 + 브론즈 #B18F7C - 원 게이지 포인트
@@ -41,10 +41,12 @@ struct AppColors {
     static let silverWhiteAlpha30 = Color(red: 0.898, green: 0.914, blue: 0.941).opacity(0.30)
     static let silverWhiteAlpha15 = Color(red: 0.898, green: 0.914, blue: 0.941).opacity(0.15)
 
-    // 은은한 핑크/레드 네온 #FF4B72 - 하단 박스 테두리
+    // 네온 핑크/레드 #FF4B72 - OFF 판정, 업장소멸 강조, 일요일 표시
     static let neonGlowPink = Color(red: 1.0, green: 0.294, blue: 0.447)
     static let neonGlowPinkAlpha40 = Color(red: 1.0, green: 0.294, blue: 0.447).opacity(0.40)
     static let neonGlowPinkAlpha20 = Color(red: 1.0, green: 0.294, blue: 0.447).opacity(0.20)
+    static let neonGlowPinkAlpha12 = Color(red: 1.0, green: 0.294, blue: 0.447).opacity(0.12)
+    static let neonGlowPinkAlpha08 = Color(red: 1.0, green: 0.294, blue: 0.447).opacity(0.08)
 
     // 톤다운된 쿠퍼 / 어두운 웜 그레이 #4E433B - 하단 박스 테두리
     static let darkCopper = Color(red: 0.306, green: 0.263, blue: 0.231)

@@ -111,7 +111,7 @@ struct CalendarView: View {
             ForEach(Array(days.enumerated()), id: \.offset) { index, day in
                 Text(day)
                     .font(.system(size: 13, weight: .light))
-                    .foregroundColor(index == 0 ? Color(red: 0.85, green: 0.3, blue: 0.3) : AppColors.white50)
+                    .foregroundColor(index == 0 ? AppColors.red : AppColors.white50)
                     .frame(maxWidth: .infinity)
             }
         }
@@ -357,7 +357,7 @@ struct CalendarDayCell: View {
                             .font(.system(size: 14, weight: isToday ? .medium : .light))
                             .foregroundColor(
                                 isToday ? AppColors.gold :
-                                isSunday ? Color(red: 0.85, green: 0.3, blue: 0.3) :
+                                isSunday ? AppColors.red :
                                 AppColors.white80
                             )
                     }
