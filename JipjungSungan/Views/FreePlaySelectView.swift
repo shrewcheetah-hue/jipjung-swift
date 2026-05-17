@@ -1,24 +1,21 @@
 import SwiftUI
 
 // 자유치기 모드 선택 화면
-// 공덕(功德) - 금빛 연꽃 / 업장소멸(業障消滅) - 붉은 불꽃 캐릭터
-// 색상 철학: 공덕=따뜻한 금빛(#C8A84B), 업장소멸=네온 핑크(#FF4B72) — 불꽃의 생동감, 번뇌를 태우는 강렬함
+// 색상 철학: 두 카드 모두 중립 아이보리/다크브라운으로 통일 — 소소하고 차분한 목탁 앱 감성
 
 enum FreePlayMode {
     case merit    // 공덕
     case karma    // 업장소멸
 }
 
-// 색상 상수
-private let meritGold   = Color(red: 0.784, green: 0.659, blue: 0.294)  // #C8A84B
-private let karmaRed    = AppColors.neonGlowPink  // #FF4B72 - 불꽃의 생동감
+// 중립 색상 상수
+private let cardText     = Color(red: 0.918, green: 0.902, blue: 0.882)  // #EAE6E1 아이보리
+private let cardBorder   = Color(red: 0.227, green: 0.204, blue: 0.188)  // #3A3430 다크브라운
+private let cardIconBg   = Color(red: 0.227, green: 0.204, blue: 0.188).opacity(0.5)
 
 struct FreePlaySelectView: View {
     let onSelect: (FreePlayMode) -> Void
     let onBack: () -> Void
-
-    @State private var meritGlow = false
-    @State private var karmaGlow = false
 
     var body: some View {
         ZStack {
@@ -55,48 +52,22 @@ struct FreePlaySelectView: View {
 
                 // 두 모드 카드
                 VStack(spacing: 24) {
-                    // 공덕 카드
                     ModeCard(
                         title: "공덕",
                         subtitle: "功德",
                         description: "목탁 소리로 공덕을 쌓습니다\n빛이 모여 마음을 밝힙니다",
-                        accentColor: meritGold,
-                        glowColor: meritGold,
-                        customImage: "lotus",
-                        isGlowing: meritGlow
+                        customImage: "lotus"
                     ) {
-                        withAnimation(.easeInOut(duration: 0.15)) { meritGlow = true }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                            onSelect(.merit)
-                        }
-                    }
-                    .onAppear {
-                        withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
-                            meritGlow = true
-                        }
+                        onSelect(.merit)
                     }
 
-                    // 업장소멸 카드
                     ModeCard(
                         title: "업장소멸",
                         subtitle: "業障消滅",
                         description: "목탁 소리로 업장을 소멸합니다\n불꽃이 번뇌를 태워냅니다",
-                        accentColor: karmaRed,
-                        glowColor: karmaRed,
-                        customImage: "karma_flame",
-                        isGlowing: karmaGlow
+                        customImage: "karma_flame"
                     ) {
-                        withAnimation(.easeInOut(duration: 0.15)) { karmaGlow = true }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                            onSelect(.karma)
-                        }
-                    }
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-                            withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
-                                karmaGlow = true
-                            }
-                        }
+                        onSelect(.karma)
                     }
                 }
                 .padding(.horizontal, 28)
@@ -113,22 +84,19 @@ struct ModeCard: View {
     let title: String
     let subtitle: String
     let description: String
-    let accentColor: Color
-    let glowColor: Color
     var customImage: String? = nil
-    let isGlowing: Bool
     let onTap: () -> Void
 
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: 20) {
-                // 아이콘
+                // 아이콘 원
                 ZStack {
                     Circle()
-                        .fill(Color(red: 0.227, green: 0.204, blue: 0.188).opacity(0.6))
+                        .fill(cardIconBg)
                         .frame(width: 64, height: 64)
                     Circle()
-                        .stroke(Color(red: 0.227, green: 0.204, blue: 0.188), lineWidth: 0.8)
+                        .stroke(cardBorder, lineWidth: 0.8)
                         .frame(width: 64, height: 64)
                     if let imgName = customImage {
                         Image(imgName)
@@ -143,10 +111,10 @@ struct ModeCard: View {
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text(title)
                             .font(.system(size: 22, weight: .light))
-                            .foregroundColor(Color(red: 0.918, green: 0.902, blue: 0.882))  // #EAE6E1
+                            .foregroundColor(cardText)
                         Text(subtitle)
                             .font(.system(size: 13, weight: .light))
-                            .foregroundColor(Color(red: 0.918, green: 0.902, blue: 0.882).opacity(0.5))
+                            .foregroundColor(cardText.opacity(0.45))
                     }
                     Text(description)
                         .font(.system(size: 13, weight: .light))
@@ -159,7 +127,7 @@ struct ModeCard: View {
 
                 Image(systemName: "chevron.right")
                     .font(.system(size: 13))
-                    .foregroundColor(Color(red: 0.918, green: 0.902, blue: 0.882).opacity(0.35))
+                    .foregroundColor(cardText.opacity(0.30))
             }
             .padding(20)
             .background(
@@ -167,10 +135,9 @@ struct ModeCard: View {
                     .fill(AppColors.surface)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color(red: 0.227, green: 0.204, blue: 0.188), lineWidth: 0.8)  // #3A3430
+                            .stroke(cardBorder, lineWidth: 0.8)
                     )
             )
-            .shadow(color: Color.black.opacity(0.15), radius: 4)
         }
         .buttonStyle(PlainButtonStyle())
     }
