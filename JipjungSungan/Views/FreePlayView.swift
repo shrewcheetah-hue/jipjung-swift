@@ -3,7 +3,7 @@ import SpriteKit
 import AVFoundation
 
 // 자유치기 수행 화면
-// 타이밍 링 없이 자유롭게 탭 → SpriteKit 파티클 효과
+// 공덕: 자유롭게 / 업장소멸: 108번 기본 목표, 달성 후 계속 가능
 struct FreePlayView: View {
     let mode: FreePlayMode
     let onEnd: () -> Void
@@ -16,9 +16,16 @@ struct FreePlayView: View {
     @State private var audioPlayer: AVAudioPlayer?
     @State private var showEndConfirm = false
 
+    // 업장소멸 108번 달성 관련
+    @State private var roundsCompleted: Int = 0       // 108번 완료 횟수
+    @State private var show108Celebration = false     // 108번 달성 축하 표시
+    @State private var celebrationScale: CGFloat = 0.5
+
     // SpriteKit 씬
     @State private var meritScene = MeritParticleScene()
     @State private var karmaScene = KarmaParticleScene()
+
+    private let karmaGoal = 108
 
     // 모드별 색상
     private var accentColor: Color {
@@ -39,12 +46,17 @@ struct FreePlayView: View {
     private var modeTitle: String {
         mode == .merit ? "공덕" : "업장소멸"
     }
-    private var countLabel: String {
-        mode == .merit ? "공덕 \(count)회" : "업장 \(count)개 소멸"
-    }
     private var soundName: String {
-        // 공덕: moktak1, 업장소멸: moktak3 (짧고 강한 소리)
         mode == .merit ? "moktak1" : "moktak3"
+    }
+
+    // 업장소멸 현재 라운드 내 진행 횟수
+    private var currentRoundCount: Int {
+        mode == .karma ? count % karmaGoal : count
+    }
+    // 업장소멸 진행률 (0~1)
+    private var karmaProgress: CGFloat {
+        mode == .karma ? CGFloat(currentRoundCount) / CGFloat(karmaGoal) : 0
     }
 
     var body: some View {
@@ -78,11 +90,15 @@ struct FreePlayView: View {
                     endButton
                         .padding(.bottom, 40)
                 }
+
+                // 108번 달성 축하 오버레이
+                if show108Celebration {
+                    celebrationOverlay
+                }
             }
             .onAppear {
                 setupAudio()
                 startTimer()
-                // 씬 크기 설정
                 meritScene.size = geo.size
                 karmaScene.size = geo.size
             }
@@ -109,6 +125,17 @@ struct FreePlayView: View {
                     .foregroundColor(accentColor.opacity(0.6))
             }
             Spacer()
+            // 업장소멸: 완료 라운드 표시
+            if mode == .karma && roundsCompleted > 0 {
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("\(roundsCompleted)순")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(accentColor)
+                    Text("108번 완료")
+                        .font(.system(size: 11, weight: .light))
+                        .foregroundColor(accentColor.opacity(0.6))
+                }
+            }
         }
         .padding(.horizontal, 24)
         .padding(.top, 16)
@@ -118,6 +145,41 @@ struct FreePlayView: View {
     private func moktakArea(geo: GeometryProxy) -> some View {
         let size = min(geo.size.width * 0.68, 280.0)
         return ZStack {
+            // 업장소멸: 진행률 링
+            if mode == .karma {
+                // 배경 링
+                Circle()
+                    .stroke(accentColor.opacity(0.12), lineWidth: 3)
+                    .frame(width: size * 1.15, height: size * 1.15)
+
+                // 진행률 링
+                Circle()
+                    .trim(from: 0, to: karmaProgress)
+                    .stroke(
+                        AngularGradient(
+                            gradient: Gradient(colors: [accentColor.opacity(0.3), accentColor]),
+                            center: .center
+                        ),
+                        style: StrokeStyle(lineWidth: 3, lineCap: .round)
+                    )
+                    .frame(width: size * 1.15, height: size * 1.15)
+                    .rotationEffect(.degrees(-90))
+                    .animation(.linear(duration: 0.1), value: karmaProgress)
+
+                // 남은 횟수 표시 (108번 미달성 시)
+                if currentRoundCount < karmaGoal {
+                    VStack(spacing: 2) {
+                        Text("\(karmaGoal - currentRoundCount)")
+                            .font(.system(size: 13, weight: .light).monospacedDigit())
+                            .foregroundColor(accentColor.opacity(0.7))
+                        Text("번 남음")
+                            .font(.system(size: 10, weight: .light))
+                            .foregroundColor(accentColor.opacity(0.4))
+                    }
+                    .offset(y: size * 0.72)
+                }
+            }
+
             // 배경 glow
             Circle()
                 .fill(glowColor.opacity(0.08 + tapGlow * 0.18))
@@ -142,14 +204,60 @@ struct FreePlayView: View {
     // MARK: - Count Display
     private var countDisplay: some View {
         VStack(spacing: 6) {
-            Text("\(count)")
-                .font(.system(size: 72, weight: .thin).monospacedDigit())
-                .foregroundColor(accentColor)
-                .shadow(color: glowColor.opacity(0.4), radius: 12)
-            Text(mode == .merit ? "공덕" : "업장소멸")
-                .font(.system(size: 14, weight: .light))
-                .tracking(4)
-                .foregroundColor(accentColor.opacity(0.6))
+            if mode == .karma {
+                // 업장소멸: 현재 라운드 내 횟수 크게, 전체 누적 작게
+                Text("\(currentRoundCount == 0 && count > 0 ? karmaGoal : currentRoundCount)")
+                    .font(.system(size: 72, weight: .thin).monospacedDigit())
+                    .foregroundColor(accentColor)
+                    .shadow(color: glowColor.opacity(0.4), radius: 12)
+                Text("/ \(karmaGoal) 업장소멸")
+                    .font(.system(size: 14, weight: .light))
+                    .tracking(3)
+                    .foregroundColor(accentColor.opacity(0.6))
+                if count > 0 {
+                    Text("총 \(count)번")
+                        .font(.system(size: 12, weight: .light))
+                        .foregroundColor(accentColor.opacity(0.4))
+                }
+            } else {
+                // 공덕: 전체 횟수
+                Text("\(count)")
+                    .font(.system(size: 72, weight: .thin).monospacedDigit())
+                    .foregroundColor(accentColor)
+                    .shadow(color: glowColor.opacity(0.4), radius: 12)
+                Text("공덕")
+                    .font(.system(size: 14, weight: .light))
+                    .tracking(4)
+                    .foregroundColor(accentColor.opacity(0.6))
+            }
+        }
+    }
+
+    // MARK: - 108번 달성 축하 오버레이
+    private var celebrationOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.6).ignoresSafeArea()
+            VStack(spacing: 20) {
+                Text("🔥")
+                    .font(.system(size: 60))
+                Text("업장소멸!")
+                    .font(.system(size: 32, weight: .medium))
+                    .tracking(6)
+                    .foregroundColor(accentColor)
+                Text("108번 완료 · \(roundsCompleted)순")
+                    .font(.system(size: 16, weight: .light))
+                    .tracking(2)
+                    .foregroundColor(accentColor.opacity(0.7))
+                Text("계속 치면 더 소멸됩니다")
+                    .font(.system(size: 13, weight: .light))
+                    .foregroundColor(.white.opacity(0.5))
+            }
+            .scaleEffect(celebrationScale)
+        }
+        .onTapGesture {
+            withAnimation(.easeOut(duration: 0.3)) {
+                show108Celebration = false
+            }
         }
     }
 
@@ -185,7 +293,7 @@ struct FreePlayView: View {
             tapGlow = 0.0
         }
 
-        // SpriteKit 파티클 방출 (목탁 중앙 위치)
+        // SpriteKit 파티클 방출
         let centerX = geo.size.width / 2
         let centerY = geo.size.height / 2
         let skPoint = CGPoint(x: centerX, y: centerY)
@@ -199,6 +307,25 @@ struct FreePlayView: View {
         // 햅틱
         let impact = UIImpactFeedbackGenerator(style: mode == .merit ? .light : .medium)
         impact.impactOccurred()
+
+        // 업장소멸: 108번 달성 체크
+        if mode == .karma && count % karmaGoal == 0 {
+            roundsCompleted += 1
+            // 강한 햅틱
+            let notification = UINotificationFeedbackGenerator()
+            notification.notificationOccurred(.success)
+            // 축하 오버레이 표시
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) {
+                show108Celebration = true
+                celebrationScale = 1.0
+            }
+            // 3초 후 자동으로 사라짐
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    show108Celebration = false
+                }
+            }
+        }
     }
 
     // MARK: - Audio
@@ -229,5 +356,5 @@ struct FreePlayView: View {
 }
 
 #Preview {
-    FreePlayView(mode: .merit, onEnd: {})
+    FreePlayView(mode: .karma, onEnd: {})
 }
