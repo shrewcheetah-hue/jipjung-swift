@@ -125,11 +125,10 @@ struct ModeCard: View {
                 // 아이콘
                 ZStack {
                     Circle()
-                        .fill(accentColor.opacity(0.10))
+                        .fill(Color(red: 0.227, green: 0.204, blue: 0.188).opacity(0.6))
                         .frame(width: 64, height: 64)
-                        .blur(radius: isGlowing ? 10 : 4)
                     Circle()
-                        .stroke(accentColor.opacity(isGlowing ? 0.45 : 0.25), lineWidth: 1)
+                        .stroke(Color(red: 0.227, green: 0.204, blue: 0.188), lineWidth: 0.8)
                         .frame(width: 64, height: 64)
                     if let imgName = customImage {
                         Image(imgName)
@@ -143,11 +142,11 @@ struct ModeCard: View {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text(title)
-                            .font(.system(size: 22, weight: .medium))
-                            .foregroundColor(accentColor)
+                            .font(.system(size: 22, weight: .light))
+                            .foregroundColor(Color(red: 0.918, green: 0.902, blue: 0.882))  // #EAE6E1
                         Text(subtitle)
                             .font(.system(size: 13, weight: .light))
-                            .foregroundColor(accentColor.opacity(0.55))
+                            .foregroundColor(Color(red: 0.918, green: 0.902, blue: 0.882).opacity(0.5))
                     }
                     Text(description)
                         .font(.system(size: 13, weight: .light))
@@ -160,18 +159,18 @@ struct ModeCard: View {
 
                 Image(systemName: "chevron.right")
                     .font(.system(size: 13))
-                    .foregroundColor(accentColor.opacity(0.45))
+                    .foregroundColor(Color(red: 0.918, green: 0.902, blue: 0.882).opacity(0.35))
             }
             .padding(20)
             .background(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 8)
                     .fill(AppColors.surface)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(accentColor.opacity(isGlowing ? 0.30 : 0.12), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color(red: 0.227, green: 0.204, blue: 0.188), lineWidth: 0.8)  // #3A3430
                     )
             )
-            .shadow(color: glowColor.opacity(isGlowing ? 0.20 : 0.04), radius: isGlowing ? 18 : 4)
+            .shadow(color: Color.black.opacity(0.15), radius: 4)
         }
         .buttonStyle(PlainButtonStyle())
     }
