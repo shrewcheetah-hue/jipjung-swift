@@ -1,12 +1,18 @@
 import SwiftUI
 
-// 집중의 순간 - 5단계 심박수 측정 화면
-// 탭으로 BPM 측정 후 수행 시작
+// 집중의 순간 - 5단계 소원빌기 화면
+// 무념무상 or 소원빌기 선택 → 심박수 측정 → 수행 시작
+
+enum HeartPracticeMode {
+    case empty   // 무념무상
+    case wish    // 소원빌기
+}
 
 struct HeartStageView: View {
     let onStart: (Double) -> Void
     let onBack: () -> Void
 
+    @State private var selectedMode: HeartPracticeMode? = nil
     @State private var tapTimes: [Date] = []
     @State private var measuredBpm: Double? = nil
     @State private var heartPulse = false
@@ -36,7 +42,7 @@ struct HeartStageView: View {
                 .padding(.top, 16)
                 .padding(.horizontal, 24)
 
-                Spacer().frame(height: 40)
+                Spacer().frame(height: 32)
 
                 // 타이틀
                 VStack(spacing: 8) {
@@ -57,37 +63,43 @@ struct HeartStageView: View {
                 Image("moktak")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 110, height: 110)
+                    .frame(width: 100, height: 100)
                     .opacity(0.85)
+
+                Spacer().frame(height: 28)
+
+                // 모드 선택 (무념무상 / 소원빌기)
+                modeSelector
 
                 Spacer().frame(height: 24)
 
                 // 심박 표시 원
                 heartDisplay
 
-                Spacer().frame(height: 32)
+                Spacer().frame(height: 24)
 
                 // 설명 텍스트
-                Text(t.heartDesc)
+                Text(modeDescription)
                     .font(.system(size: 13, weight: .light))
                     .foregroundColor(AppColors.white50)
                     .multilineTextAlignment(.center)
                     .lineSpacing(6)
                     .padding(.horizontal, 32)
+                    .animation(.easeInOut(duration: 0.3), value: selectedMode)
 
-                Spacer().frame(height: 40)
+                Spacer().frame(height: 32)
 
                 // 탭 버튼
                 tapButton
 
-                Spacer().frame(height: 20)
+                Spacer().frame(height: 16)
 
                 // 리셋 버튼
                 if !tapTimes.isEmpty {
                     resetButton
                 }
 
-                Spacer().frame(height: 24)
+                Spacer().frame(height: 20)
 
                 // 수행 시작 버튼
                 startButton
@@ -100,7 +112,7 @@ struct HeartStageView: View {
                     .foregroundColor(AppColors.white30)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
-                    .padding(.bottom, 40)
+                    .padding(.bottom, 36)
             }
         }
         .opacity(appear ? 1 : 0)
@@ -111,26 +123,78 @@ struct HeartStageView: View {
         }
     }
 
+    // MARK: - Mode Selector
+    private var modeSelector: some View {
+        HStack(spacing: 0) {
+            modeButton(title: "무념무상", mode: .empty)
+
+            // 구분선
+            Rectangle()
+                .fill(AppColors.white10)
+                .frame(width: 1, height: 36)
+
+            modeButton(title: "소원빌기", mode: .wish)
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(AppColors.goldAlpha15, lineWidth: 1)
+        )
+        .padding(.horizontal, 48)
+    }
+
+    private func modeButton(title: String, mode: HeartPracticeMode) -> some View {
+        let isSelected = selectedMode == mode
+        return Button(action: {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                selectedMode = mode
+            }
+        }) {
+            Text(title)
+                .font(.system(size: 13, weight: isSelected ? .regular : .light))
+                .foregroundColor(isSelected ? AppColors.gold : AppColors.white30)
+                .tracking(1)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(
+                    isSelected
+                        ? AppColors.goldAlpha08
+                        : Color.clear
+                )
+        }
+    }
+
+    // MARK: - Mode Description
+    private var modeDescription: String {
+        switch selectedMode {
+        case .empty:
+            return "소리에만 집중하세요.\n생각이 오면 그냥 흘려보내세요."
+        case .wish:
+            return "심박수에 맞춰 목탁이 울립니다.\n치는 동안 마음속으로 소원을 빌어보세요."
+        case nil:
+            return t.heartDesc
+        }
+    }
+
     // MARK: - Heart Display
     private var heartDisplay: some View {
         ZStack {
             // 외부 원
             Circle()
                 .stroke(AppColors.goldAlpha15, lineWidth: 1)
-                .frame(width: 160, height: 160)
+                .frame(width: 150, height: 150)
 
             // 내부 원 (심박에 맞춰 펄스)
             Circle()
                 .stroke(AppColors.goldAlpha30, lineWidth: 1.5)
-                .frame(width: 110, height: 110)
-                .scaleEffect(heartPulse ? 1.1 : 1.0)
+                .frame(width: 100, height: 100)
+                .scaleEffect(heartPulse ? 1.12 : 1.0)
                 .animation(.easeOut(duration: 0.15), value: heartPulse)
 
             // BPM 표시
             VStack(spacing: 4) {
                 if let bpm = measuredBpm {
                     Text("\(Int(bpm))")
-                        .font(.system(size: 40, weight: .thin, design: .monospaced))
+                        .font(.system(size: 38, weight: .thin, design: .monospaced))
                         .foregroundColor(AppColors.gold)
 
                     Text("BPM")
@@ -139,7 +203,7 @@ struct HeartStageView: View {
                         .tracking(2)
                 } else {
                     Image(systemName: "heart")
-                        .font(.system(size: 32))
+                        .font(.system(size: 28))
                         .foregroundColor(AppColors.goldDim)
 
                     Text("탭으로 측정")
@@ -164,7 +228,7 @@ struct HeartStageView: View {
 
                 VStack(spacing: 6) {
                     Image(systemName: "heart.fill")
-                        .font(.system(size: 24))
+                        .font(.system(size: 22))
                         .foregroundColor(AppColors.gold)
 
                     Text(t.heartTapButton)
@@ -178,7 +242,7 @@ struct HeartStageView: View {
                             .foregroundColor(AppColors.goldDim)
                     }
                 }
-                .padding(.vertical, 24)
+                .padding(.vertical, 20)
                 .padding(.horizontal, 40)
             }
         }
@@ -198,30 +262,31 @@ struct HeartStageView: View {
 
     // MARK: - Start Button
     private var startButton: some View {
-        Button(action: {
+        let canStart = measuredBpm != nil
+        return Button(action: {
             if let bpm = measuredBpm {
                 onStart(bpm)
             }
         }) {
             Text(t.heartStartButton(bpm: measuredBpm.map { Int($0) }))
                 .font(.system(size: 15, weight: .light))
-                .foregroundColor(measuredBpm != nil ? AppColors.gold : AppColors.white30)
+                .foregroundColor(canStart ? AppColors.gold : AppColors.white30)
                 .tracking(1)
                 .padding(.vertical, 14)
                 .padding(.horizontal, 32)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(measuredBpm != nil ? AppColors.goldAlpha15 : AppColors.surface)
+                        .fill(canStart ? AppColors.goldAlpha15 : AppColors.surface)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(
-                                    measuredBpm != nil ? AppColors.goldAlpha30 : AppColors.white10,
+                                    canStart ? AppColors.goldAlpha30 : AppColors.white10,
                                     lineWidth: 1
                                 )
                         )
                 )
         }
-        .disabled(measuredBpm == nil)
+        .disabled(!canStart)
         .padding(.horizontal, 40)
     }
 
@@ -230,21 +295,17 @@ struct HeartStageView: View {
         let now = Date()
         tapTimes.append(now)
 
-        // 심박 펄스 애니메이션
         heartPulse = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
             heartPulse = false
         }
 
-        // 오래된 탭 제거 (최근 10초)
         tapTimes = tapTimes.filter { now.timeIntervalSince($0) < 10.0 }
 
-        // BPM 계산 (최소 minTaps 이상)
         if tapTimes.count >= minTaps {
             calculateBpm()
         }
 
-        // 최대 탭 수 초과 시 오래된 것 제거
         if tapTimes.count > maxTaps {
             tapTimes.removeFirst()
         }
@@ -255,7 +316,6 @@ struct HeartStageView: View {
         let intervals = zip(tapTimes, tapTimes.dropFirst()).map { $1.timeIntervalSince($0) }
         let avgInterval = intervals.reduce(0, +) / Double(intervals.count)
         let bpm = 60.0 / avgInterval
-        // 합리적인 범위로 제한 (40~200 BPM)
         measuredBpm = max(40, min(200, bpm))
     }
 
