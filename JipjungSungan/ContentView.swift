@@ -9,6 +9,8 @@ enum AppState {
     case practice(stage: Int)
     case result
     case calendar
+    case freePlaySelect
+    case freePlay(mode: FreePlayMode)
 }
 
 struct ContentView: View {
@@ -34,6 +36,9 @@ struct ContentView: View {
                     },
                     onCalendar: {
                         appState = .calendar
+                    },
+                    onFreePlay: {
+                        appState = .freePlaySelect
                     }
                 )
 
@@ -69,6 +74,24 @@ struct ContentView: View {
             case .calendar:
                 CalendarView(
                     onBack: {
+                        appState = .start
+                    }
+                )
+
+            case .freePlaySelect:
+                FreePlaySelectView(
+                    onSelect: { mode in
+                        appState = .freePlay(mode: mode)
+                    },
+                    onBack: {
+                        appState = .start
+                    }
+                )
+
+            case .freePlay(let mode):
+                FreePlayView(
+                    mode: mode,
+                    onEnd: {
                         appState = .start
                     }
                 )

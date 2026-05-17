@@ -21,6 +21,10 @@
 		B012 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A012 /* Assets.xcassets */; };
 		B013 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = A013 /* L10n.swift */; };
 		B014 /* LunarCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A014 /* LunarCalendarModel.swift */; };
+		B015 /* FreePlaySelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A015 /* FreePlaySelectView.swift */; };
+		B016 /* FreePlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A016 /* FreePlayView.swift */; };
+		B017 /* MeritParticleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017 /* MeritParticleScene.swift */; };
+		B018 /* KarmaParticleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018 /* KarmaParticleScene.swift */; };
 		AF46DE415E4D42348977F865 /* moktak1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 543152E34231431EAD82F5B0 /* moktak1.wav */; };
 		D5AAD98A776E4473AEDCEFE5 /* moktak2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C4AA05BADA485EA520A85B /* moktak2.wav */; };
 		545BD7B80CFA4C6B8C2D87B8 /* moktak3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 00E8FFD9B85D4C1DB2FCB07A /* moktak3.wav */; };
@@ -41,6 +45,10 @@
 		A012 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A013 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		A014 /* LunarCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunarCalendarModel.swift; sourceTree = "<group>"; };
+		A015 /* FreePlaySelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreePlaySelectView.swift; sourceTree = "<group>"; };
+		A016 /* FreePlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreePlayView.swift; sourceTree = "<group>"; };
+		A017 /* MeritParticleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeritParticleScene.swift; sourceTree = "<group>"; };
+		A018 /* KarmaParticleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KarmaParticleScene.swift; sourceTree = "<group>"; };
 		PROD /* JipjungSungan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JipjungSungan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		543152E34231431EAD82F5B0 /* moktak1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = moktak1.wav; path = Sounds/moktak1.wav; sourceTree = "<group>"; };
 		37C4AA05BADA485EA520A85B /* moktak2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = moktak2.wav; path = Sounds/moktak2.wav; sourceTree = "<group>"; };
@@ -111,6 +119,10 @@
 				A007 /* ResultView.swift */,
 				A008 /* HeartStageView.swift */,
 				A009 /* CalendarView.swift */,
+				A015 /* FreePlaySelectView.swift */,
+				A016 /* FreePlayView.swift */,
+				A017 /* MeritParticleScene.swift */,
+				A018 /* KarmaParticleScene.swift */,
 			);
 			name = Views;
 			path = Views;
@@ -211,6 +223,10 @@
 				B010 /* AppColors.swift in Sources */,
 				B013 /* L10n.swift in Sources */,
 				B014 /* LunarCalendarModel.swift in Sources */,
+				B015 /* FreePlaySelectView.swift in Sources */,
+				B016 /* FreePlayView.swift in Sources */,
+				B017 /* MeritParticleScene.swift in Sources */,
+				B018 /* KarmaParticleScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

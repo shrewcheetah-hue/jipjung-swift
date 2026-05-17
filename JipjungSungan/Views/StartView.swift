@@ -6,6 +6,7 @@ import SwiftUI
 struct StartView: View {
     let onSelectStage: (Int) -> Void
     let onCalendar: () -> Void
+    let onFreePlay: () -> Void
 
     @State private var appear = false
 
@@ -34,8 +35,8 @@ struct StartView: View {
 
                     Spacer().frame(height: 28)
 
-                    // 달의 기운 버튼
-                    calendarButton
+                    // 하단 버튼 행 (달의 기운 + 자유치기)
+                    bottomButtons
 
                     Spacer().frame(height: 40)
                 }
@@ -111,19 +112,37 @@ struct StartView: View {
         .padding(.horizontal, 8)
     }
 
-    // MARK: - Calendar Button
-    private var calendarButton: some View {
-        Button(action: onCalendar) {
-            Text(t.calendarButton)
-                .font(.system(size: 12, weight: .light))
-                .foregroundColor(AppColors.white30)
-                .tracking(1)
+    // MARK: - Bottom Buttons
+    private var bottomButtons: some View {
+        HStack(spacing: 16) {
+            Button(action: onCalendar) {
+                Text(t.calendarButton)
+                    .font(.system(size: 12, weight: .light))
+                    .foregroundColor(AppColors.white30)
+                    .tracking(1)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 18)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(AppColors.white10, lineWidth: 1)
+                    )
+            }
+            Button(action: onFreePlay) {
+                HStack(spacing: 6) {
+                    Image(systemName: "hand.tap")
+                        .font(.system(size: 11))
+                    Text("자유치기")
+                        .font(.system(size: 12, weight: .light))
+                        .tracking(1)
+                }
+                .foregroundColor(AppColors.goldDim)
                 .padding(.vertical, 10)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 18)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
-                        .stroke(AppColors.white10, lineWidth: 1)
+                        .stroke(AppColors.goldAlpha15, lineWidth: 1)
                 )
+            }
         }
     }
 }
@@ -176,7 +195,8 @@ struct StageCircleButton: View {
 #Preview {
     StartView(
         onSelectStage: { _ in },
-        onCalendar: {}
+        onCalendar: {},
+        onFreePlay: {}
     )
     .preferredColorScheme(.dark)
 }
