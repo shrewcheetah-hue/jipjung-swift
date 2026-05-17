@@ -137,8 +137,9 @@ struct StartView: View {
             }
             Button(action: onCalendar) {
                 HStack(alignment: .center, spacing: 8) {
-                    Text("🌕")
-                        .font(.system(size: 14))
+                    Image("moon_icon")
+                        .resizable()
+                        .scaledToFit()
                         .frame(width: iconSize, height: iconSize)
                     Text("달의 기운")
                         .font(.system(size: 12, weight: .light))
