@@ -25,6 +25,7 @@
 		B016 /* FreePlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A016 /* FreePlayView.swift */; };
 		B017 /* MeritParticleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017 /* MeritParticleScene.swift */; };
 		B018 /* KarmaParticleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018 /* KarmaParticleScene.swift */; };
+		B019 /* WatchHeartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A019 /* WatchHeartManager.swift */; };
 		AF46DE415E4D42348977F865 /* moktak1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 543152E34231431EAD82F5B0 /* moktak1.wav */; };
 		D5AAD98A776E4473AEDCEFE5 /* moktak2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C4AA05BADA485EA520A85B /* moktak2.wav */; };
 		545BD7B80CFA4C6B8C2D87B8 /* moktak3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 00E8FFD9B85D4C1DB2FCB07A /* moktak3.wav */; };
@@ -49,6 +50,7 @@
 		A016 /* FreePlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreePlayView.swift; sourceTree = "<group>"; };
 		A017 /* MeritParticleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeritParticleScene.swift; sourceTree = "<group>"; };
 		A018 /* KarmaParticleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KarmaParticleScene.swift; sourceTree = "<group>"; };
+		A019 /* WatchHeartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHeartManager.swift; sourceTree = "<group>"; };
 		PROD /* JipjungSungan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JipjungSungan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		543152E34231431EAD82F5B0 /* moktak1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = moktak1.wav; path = Sounds/moktak1.wav; sourceTree = "<group>"; };
 		37C4AA05BADA485EA520A85B /* moktak2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = moktak2.wav; path = Sounds/moktak2.wav; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				A004 /* RhythmEngine.swift */,
+				A019 /* WatchHeartManager.swift */,
 			);
 			name = ViewModels;
 			path = ViewModels;
@@ -227,7 +230,8 @@
 				B016 /* FreePlayView.swift in Sources */,
 				B017 /* MeritParticleScene.swift in Sources */,
 				B018 /* KarmaParticleScene.swift in Sources */,
-			);
+				B019 /* WatchHeartManager.swift in Sources */,
+				);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
