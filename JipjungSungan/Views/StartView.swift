@@ -38,7 +38,12 @@ struct StartView: View {
                     // 하단 버튼 행 (달의 기운 + 자유치기)
                     bottomButtons
 
-                    Spacer().frame(height: 24)
+                    Spacer().frame(height: 16)
+
+                    // 면책 조항 (Apple 심사 요건)
+                    disclaimerText
+
+                    Spacer().frame(height: 16)
                 }
             }
         }
@@ -98,6 +103,16 @@ struct StartView: View {
                 .foregroundColor(AppColors.white80)
                 .tracking(3)
         }
+    }
+
+    // MARK: - Disclaimer
+    private var disclaimerText: some View {
+        Text("본 앱은 명상·호흡·사운드 기반의 웰니스 경험을 제공합니다.\n심박수는 사운드 경험의 리듬 참고값으로만 사용되며, 의료적 진단·치료·예방을 제공하지 않습니다.\n건강 관련 판단이 필요한 경우 전문가와 상담하세요.")
+            .font(.system(size: 10, weight: .light))
+            .foregroundColor(Color.white.opacity(0.25))
+            .multilineTextAlignment(.center)
+            .lineSpacing(4)
+            .padding(.horizontal, 32)
     }
 
     // MARK: - Stage Circle Buttons
