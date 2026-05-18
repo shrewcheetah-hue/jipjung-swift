@@ -5,7 +5,6 @@ import WatchConnectivity
 // 집중의 순간 Watch - 심박수 측정 및 iPhone 전송 매니저
 // HealthKit으로 실시간 심박수 측정 → WatchConnectivity로 iPhone에 전송
 class HeartRateManager: NSObject, ObservableObject {
-    static let shared = HeartRateManager()
 
     private let healthStore = HKHealthStore()
     private var query: HKAnchoredObjectQuery?

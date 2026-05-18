@@ -6,7 +6,7 @@ import WatchKit
 struct ContentView: View {
     @State private var count: Int = 0
     @State private var isPressed: Bool = false
-    @StateObject private var heartManager = HeartRateManager.shared
+    @StateObject private var heartManager = HeartRateManager()
 
     let bronze = Color(red: 0.694, green: 0.561, blue: 0.486)
     let ivory  = Color(red: 0.918, green: 0.902, blue: 0.882)
