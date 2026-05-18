@@ -288,12 +288,15 @@ struct FreePlayView: View {
 
     // MARK: - Audio
     private func setupAudio() {
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        try? AVAudioSession.sharedInstance().setActive(true)
         if let url = Bundle.main.url(forResource: soundName, withExtension: "wav") {
             audioPlayer = try? AVAudioPlayer(contentsOf: url)
             audioPlayer?.prepareToPlay()
         }
     }
     private func playSound() {
+        if audioPlayer == nil { setupAudio() }
         audioPlayer?.currentTime = 0
         audioPlayer?.play()
     }

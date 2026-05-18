@@ -191,6 +191,8 @@ class RhythmEngine: ObservableObject {
     }
 
     private func prepareAudio(stage: Stage) {
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        try? AVAudioSession.sharedInstance().setActive(true)
         // 단계별 목탁 소리
         // 1~2단계: moktak1 (따라가기/느끼기 - 긴 여운)
         // 3~4단계: moktak2 (전환/내면 - 긴 여운)
@@ -201,22 +203,15 @@ class RhythmEngine: ObservableObject {
         case 3, 4: soundName = "moktak2"
         default:   soundName = "moktak3"
         }
-        if let url = Bundle.main.url(forResource: soundName, withExtension: "wav") ??
-                     Bundle.main.url(forResource: "moktak", withExtension: "wav") ??
-                     Bundle.main.url(forResource: "moktak", withExtension: "mp3") {
+        if let url = Bundle.main.url(forResource: soundName, withExtension: "wav") {
             audioPlayer = try? AVAudioPlayer(contentsOf: url)
             audioPlayer?.prepareToPlay()
         }
     }
 
     private func playSound() {
-        if let player = audioPlayer {
-            player.currentTime = 0
-            player.play()
-        } else {
-            // 소리 파일 없을 때 시스템 사운드 (클릭음)
-            AudioServicesPlaySystemSound(1104)
-        }
+        audioPlayer?.currentTime = 0
+        audioPlayer?.play()
     }
 
     // MARK: - Computed
